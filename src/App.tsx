@@ -411,11 +411,11 @@ Thank you,
   return (
     <div className="min-h-screen bg-[#FAFAFA]">
       {/* Skip Links */}
-      <a 
-        href="#calculator" 
+      <a
+        href="#main-content"
         className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-[#111827] focus:text-white focus:px-4 focus:py-2 focus:rounded-lg"
       >
-        Skip to calculator
+        Skip to main content
       </a>
       
       {/* Header */}
@@ -474,6 +474,7 @@ Thank you,
         )}
       </header>
 
+      <main id="main-content">
       {/* Hero Section — two-column split */}
       <section className="bg-[#0D1F2D] py-10 sm:py-16 border-b border-[#1A3348] relative overflow-hidden">
         {/* Playful floating icons */}
@@ -549,7 +550,25 @@ Thank you,
           <div className="space-y-6">
             {/* Income Card */}
             <div className="p-5 sm:p-6 bg-white border border-[#E5E7EB] rounded-xl shadow-sm">
-              <h3 className="font-semibold text-[#111827] mb-4">Your Income</h3>
+              <div className="flex items-center justify-between mb-4">
+                <h3 className="font-semibold text-[#111827]">Your Income</h3>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setMaritalStatus('single');
+                    setGrossSalary(55000);
+                    setPartnerSalary(45000);
+                    setNumChildren(1);
+                    setChildAge(1);
+                    setChildcareType('registered');
+                    setHoursPerWeek(45);
+                    setMonthlyCost(1200);
+                  }}
+                  className="text-xs text-[#9CA3AF] hover:text-[#6B7280] transition-colors px-2 py-1 rounded-md hover:bg-[#F3F4F6]"
+                >
+                  Reset
+                </button>
+              </div>
               
               {/* Marital Status Pills */}
               <div className="mb-4">
@@ -704,6 +723,8 @@ Thank you,
                     id="hours-week"
                     type="number"
                     value={hoursPerWeek}
+                    min={1}
+                    max={80}
                     onChange={(e) => setHoursPerWeek(Number(e.target.value) || 0)}
                     onFocus={(e) => e.target.select()}
                     className="w-full h-11 px-3 text-sm bg-white border border-[#D1D5DB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent"
@@ -744,19 +765,19 @@ Thank you,
               
               <div className="p-5 sm:p-6">
                 {/* Summary Metric Cards */}
-                <div className="grid grid-cols-3 gap-2.5 mb-3">
-                  <div className="bg-[#F5F5F5] rounded-lg p-4">
-                    <div className="text-xs text-[#6B6B6B] mb-1.5">Net monthly (after tax)</div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-3">
+                  <div className="bg-[#F5F5F5] rounded-lg p-4 flex sm:block items-center justify-between">
+                    <div className="text-xs text-[#6B6B6B] sm:mb-1.5">Net monthly (after tax)</div>
                     <div className="text-[22px] font-medium text-[#1A1A1A] tabular-nums">€{taxResult.netMonthly.toLocaleString()}</div>
                   </div>
-                  <div className="bg-[#F5F5F5] rounded-lg p-4">
-                    <div className="text-xs text-[#6B6B6B] mb-1.5">
+                  <div className="bg-[#F5F5F5] rounded-lg p-4 flex sm:block items-center justify-between">
+                    <div className="text-xs text-[#6B6B6B] sm:mb-1.5">
                       {childcareType === 'nanny' ? 'Nanny cost' : childcareType === 'unregistered' ? 'Childminder cost' : 'Childcare cost'}
                     </div>
                     <div className="text-[22px] font-medium text-[#BA7517] tabular-nums">€{outOfPocketMonthly.toLocaleString()}</div>
                   </div>
-                  <div className="bg-[#F5F5F5] rounded-lg p-4">
-                    <div className="text-xs text-[#6B6B6B] mb-1.5">Left after childcare</div>
+                  <div className="bg-[#F5F5F5] rounded-lg p-4 flex sm:block items-center justify-between">
+                    <div className="text-xs text-[#6B6B6B] sm:mb-1.5">Left after childcare</div>
                     <div className="text-[22px] font-medium text-[#A32D2D] tabular-nums">€{amountLeft.toLocaleString()}</div>
                   </div>
                 </div>
@@ -1624,6 +1645,8 @@ Thank you,
           </div>
         </div>
       </section>
+
+      </main>
 
       {/* Footer */}
       <footer className="bg-white py-10 border-t border-[#E5E7EB]">

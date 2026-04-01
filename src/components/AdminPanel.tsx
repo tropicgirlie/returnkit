@@ -113,7 +113,12 @@ export function AdminPanel({ creches, onAdd, onDelete, onUpdate, onClose }: Admi
   };
 
   return (
-    <div className="fixed inset-0 bg-black/50 z-50 flex items-start justify-center overflow-y-auto py-8">
+    <div
+      className="fixed inset-0 bg-black/50 z-50 flex items-start justify-center overflow-y-auto py-8"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="admin-panel-title"
+    >
       <div className="bg-white rounded-xl shadow-2xl w-full max-w-[720px] mx-4">
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-[#E5E7EB]">
@@ -122,13 +127,14 @@ export function AdminPanel({ creches, onAdd, onDelete, onUpdate, onClose }: Admi
               <Shield className="w-5 h-5 text-white" />
             </div>
             <div>
-              <h2 className="font-semibold text-[#111827]">Crèche Admin</h2>
+              <h2 id="admin-panel-title" className="font-semibold text-[#111827]">Crèche Admin</h2>
               <p className="text-xs text-[#6B7280]">{isAuthenticated ? `${creches.length} listings · Data saved locally` : 'Password required'}</p>
             </div>
           </div>
           <button
             type="button"
             onClick={onClose}
+            aria-label="Close admin panel"
             className="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[#F3F4F6] transition-colors"
           >
             <X className="w-5 h-5 text-[#6B7280]" />

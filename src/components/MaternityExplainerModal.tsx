@@ -9,12 +9,18 @@ export function MaternityExplainerModal({ isOpen, onClose }: MaternityExplainerM
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-4 overflow-y-auto">
+    <div
+      className="fixed inset-0 bg-black/60 z-50 flex items-end sm:items-center justify-center p-4 overflow-y-auto"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="maternity-modal-title"
+    >
       <div className="bg-white rounded-2xl max-w-2xl w-full my-8">
         <div className="sticky top-0 bg-white border-b border-[#E5E7EB] px-6 py-4 flex items-center justify-between rounded-t-2xl z-10">
-          <h3 className="font-semibold text-[#111827]">How Maternity Leave Actually Works</h3>
+          <h3 id="maternity-modal-title" className="font-semibold text-[#111827]">How Maternity Leave Actually Works</h3>
           <button
             onClick={onClose}
+            aria-label="Close modal"
             className="w-9 h-9 flex items-center justify-center hover:bg-[#F3F4F6] rounded-lg text-[#6B7280] transition-colors"
           >
             <X className="w-5 h-5" />
