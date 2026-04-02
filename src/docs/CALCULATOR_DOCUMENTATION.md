@@ -1,405 +1,438 @@
-# ReturnKit Calculator Documentation
+# ReturnKit — Calculator Documentation
+
+> **Version 3.0 · Tax year 2025 · Last updated April 2026**
+> Reflects the corrected calculation engine. Previous versions used wrong tax credits and a flat NCS rate — both are fixed here.
+
+---
 
 ## Purpose
 
-The ReturnKit Calculator is a financial reality tool designed to help Dublin parents understand the **true financial impact** of returning to work after having children. It answers the critical question: _"How much of my salary will I actually keep after paying tax and childcare?"_
+ReturnKit answers one question: **"How much of my salary will I actually keep after tax and childcare?"**
 
-This calculator is specifically designed for:
-
-- Parents deciding whether to return to work
-- Understanding effective hourly rates after childcare costs
-- Comparing full-time vs part-time vs not working scenarios
-- Navigating Ireland's complex childcare subsidy system (NCS & ECCE)
-- Making informed decisions about career and family planning
+It is built specifically for Irish parents returning to work after maternity/paternity leave. It uses real 2025 Revenue tax bands, real NCS subsidy rates, and surfaces the number most calculators hide: your **Marginal Effective Tax Rate** — the combined effect of income tax and subsidy withdrawal as your salary rises.
 
 ---
 
-## What the Calculator Measures
+## Inputs
 
-### Primary Outputs
-
-1. **Amount Left Per Month (€)**: The actual money you take home after:
-   - Income tax
-   - USC (Universal Social Charge)
-   - PRSI (Pay Related Social Insurance)
-   - Out-of-pocket childcare costs (after subsidies)
-
-2. **Percentage of Net Pay Retained**: What percentage of your after-tax salary you keep after childcare costs
-
-3. **Effective Hourly Rate (€)**: Your true hourly wage when childcare costs are factored in
-   - Calculated as: (Amount Left) / (Hours Worked per Month)
-   - Often dramatically lower than nominal hourly rate
-
-4. **Retention Strength**: A qualitative assessment of financial viability
-   - **Strong** (≥60% retained): Financially sustainable
-   - **Moderate** (40-59% retained): Marginal financial benefit
-   - **Weak** (<40% retained): Financially challenging
-
-### Visual Breakdown
-
-The calculator shows a stacked bar chart dividing gross income into:
-
-- **Childcare costs** (out-of-pocket after subsidies)
-- **Tax & deductions** (income tax + USC + PRSI)
-- **Take-home pay** (what you actually keep)
+| Input | Description |
+|-------|-------------|
+| Marital / tax status | Single, Married (one income), Married (two incomes) |
+| Gross annual salary | Your salary before tax |
+| Partner's salary | Only used for "married two incomes" |
+| Monthly pension contribution | Optional; reduces take-home but not NCS reckonable income |
+| Number of children in care | Used to multiply costs and apply multi-child NCS discount |
+| Youngest child's age band | Determines NCS max rate and ECCE eligibility |
+| Childcare provider type | Registered / Unregistered / Nanny — governs subsidy eligibility |
+| Hours per week in childcare | Capped at 45 for NCS; enter actual hours worked |
+| Monthly childcare cost | Per child, before any subsidy |
 
 ---
 
-## Calculation Logic (2025 Irish Tax System)
+## Outputs
 
-### 1. Income Tax Calculation
+| Output | What it shows |
+|--------|---------------|
+| Net monthly (after tax) | Your take-home before childcare is subtracted |
+| Childcare out-of-pocket | What you pay per month after NCS and ECCE |
+| Amount left | Net monthly minus childcare out-of-pocket |
+| % retained | Amount left as a proportion of net monthly |
+| Effective hourly rate | Amount left ÷ hours worked per month |
+| METR | % of an extra €1,000 earned that disappears to tax + subsidy loss |
+| Monthly flow | Itemised: gross → tax → net → pension → childcare → remaining |
 
-Ireland uses a progressive tax system with two rates: **20%** (standard rate) and **40%** (higher rate).
+---
 
-#### Standard Rate Cutoff (2025)
+## Step 1 — Income Tax (Revenue 2025)
 
-- **Single**: €44,000
-- **Married, one income**: €53,000
-- **Married, two incomes**: €88,000
+### How Irish income tax works
 
-#### Tax Credits (2025)
+Ireland uses two rates: **20%** (standard rate) and **40%** (higher rate). Everyone pays 20% up to a threshold (the "standard rate cut-off"), then 40% above it. Tax credits are then subtracted from the gross tax bill.
 
-- **Single**: €4,000 per year
-- **Married**: €8,000 per year (combined)
+### Standard rate cut-offs (2025)
 
-#### Calculation Formula
+| Status | Cut-off |
+|--------|---------|
+| Single | €44,000 |
+| Married, one income | €53,000 |
+| Married, two incomes | €44,000 per earner (each assessed individually) |
 
-**Single Example (€55,000 gross):**
+### Tax credits (2025) — corrected
 
-```
-Income up to €44,000:  €44,000 × 20% = €8,800
-Income above €44,000:  €11,000 × 40% = €4,400
-Total tax before credits:             = €13,200
-Minus tax credits:                     - €4,000
-Final income tax:                      = €9,200
-```
+> ⚠️ Previous versions of this calculator used €4,000 (single) and €8,000 (married two). Those figures were wrong. The correct 2025 figures are below.
 
-**Married Two Incomes Example (Person: €55,000 + Partner: €45,000):**
+| Status | Credits | Breakdown |
+|--------|---------|-----------|
+| Single | €3,875 | €1,875 personal + €2,000 PAYE (employee) |
+| Married, one income | €5,750 | 2 × €1,875 personal + 1 × €2,000 PAYE |
+| Married, two incomes | €3,875 per earner | Each person assessed individually |
 
-```
-Combined gross:        €55,000 + €45,000 = €100,000
-Income up to €88,000:  €88,000 × 20%     = €17,600
-Income above €88,000:  €12,000 × 40%     = €4,800
-Total tax before credits:                = €22,400
-Minus tax credits:                       - €8,000
-Final income tax:                        = €14,400
-```
-
-### 2. USC (Universal Social Charge) Calculation
-
-USC is a tiered progressive charge on gross income.
-
-#### USC Bands (2025)
-
-| Income Band       | Rate |
-| ----------------- | ---- |
-| €0 - €12,012      | 0.5% |
-| €12,013 - €27,382 | 2.0% |
-| €27,383 - €70,044 | 3.5% |
-| €70,045+          | 8.0% |
-
-#### Calculation Method
-
-USC is calculated cumulatively across bands.
-
-**Example (€55,000 gross):**
+### Tax formula (single or per-earner for married two)
 
 ```
-First €12,012:   €12,012 × 0.5%  = €60.06
-Next €15,370:    €15,370 × 2.0%  = €307.40
-Next €27,618:    €27,618 × 3.5%  = €966.63
-Total USC:                        = €1,334.09
+If gross ≤ cut-off:
+  gross tax = gross × 20%
+
+If gross > cut-off:
+  gross tax = (cut-off × 20%) + ((gross − cut-off) × 40%)
+
+income tax = max(0, gross tax − tax credits)
 ```
 
-**For married couples with two incomes:** USC is calculated **separately** for each person (not combined).
-
-### 3. PRSI (Pay Related Social Insurance)
-
-PRSI is a flat rate applied to gross income.
-
-- **Rate**: 4.125% of gross income
-- Applied to total household income if married with two earners
-
-**Example (€55,000 gross):**
-
+**Example — single, €55,000:**
 ```
-€55,000 × 4.125% = €2,268.75
+Gross tax  = (44,000 × 20%) + (11,000 × 40%)
+           = €8,800 + €4,400 = €13,200
+Credits    = €3,875
+Income tax = €13,200 − €3,875 = €9,325
 ```
 
-### 4. Net Income Summary
+### Married two incomes — per-person method
+
+Each spouse is assessed individually using the single cut-off (€44,000) and single credits (€3,875). Their after-tax nets are then combined to give the household net. This is more accurate than the old combined-gross method and matches how Revenue actually assesses two-income couples.
+
+---
+
+## Step 2 — USC (Universal Social Charge)
+
+USC is calculated progressively on each person's gross income separately, including for married two-income households.
+
+### USC bands (2025)
+
+| Band | Rate |
+|------|------|
+| €0 – €12,012 | 0.5% |
+| €12,013 – €27,382 | 2.0% |
+| €27,383 – €70,044 | 3.5% |
+| €70,045+ | 8.0% |
+
+### USC formula
 
 ```
-Gross Annual Income:                 €55,000
-- Income Tax:                        - €9,200
-- USC:                               - €1,334
-- PRSI:                              - €2,269
-─────────────────────────────────────────────
-Net Annual Income:                   €42,197
-Net Monthly Income:                  €3,516
+usc = 0
+For each band [lower, upper, rate]:
+  taxable = min(remaining income, upper − lower)
+  usc += taxable × rate
+  remaining income -= taxable
+```
+
+**Example — €55,000:**
+```
+€12,012 × 0.5%  = €60.06
+€15,370 × 2.0%  = €307.40
+€27,618 × 3.5%  = €966.63
+Total USC        = €1,334.09
 ```
 
 ---
 
-## Childcare Subsidy System
+## Step 3 — PRSI (Pay Related Social Insurance)
 
-Ireland has two main childcare support schemes:
-
-### 1. National Childcare Scheme (NCS)
-
-**Eligibility**: Only for **registered childcare providers** (crèches, registered childminders)
-
-**NOT eligible**: Unregistered childminders, nannies, au pairs, family members
-
-#### NCS Subsidy Rates (Income-Based)
-
-The NCS provides an hourly subsidy that **tapers** based on household net income:
-
-| Net Annual Income | Hourly Subsidy          |
-| ----------------- | ----------------------- |
-| Under €26,600     | €3.75/hour (maximum)    |
-| €26,600 - €60,000 | €3.75 → €2.14 (tapered) |
-| €60,000+          | €2.14/hour (universal)  |
-
-#### Taper Calculation
-
-For incomes between €26,600 and €60,000:
+PRSI is a flat 4.125% on gross income, calculated per earner.
 
 ```
-Range = €60,000 - €26,600 = €33,400
-Position = (Net Income - €26,600)
-Percentage through range = Position / Range
-Hourly Rate = €3.75 - ((€3.75 - €2.14) × Percentage)
-```
-
-**Example (Net Income €42,000):**
-
-```
-Position = €42,000 - €26,600 = €15,400
-Percentage = €15,400 / €33,400 = 46.1%
-Hourly Rate = €3.75 - (€1.61 × 0.461) = €3.01/hour
-```
-
-#### NCS Hours Limit
-
-- **Maximum subsidized hours**: 45 hours/week
-- If you work 50 hours/week, only 45 hours get subsidy
-
-#### Monthly NCS Subsidy
-
-```
-Weekly subsidy = Hourly Rate × Hours (max 45)
-Monthly subsidy = Weekly subsidy × 4.33 (weeks/month average)
-```
-
-**Example (€2.14/hour × 45 hours/week):**
-
-```
-€2.14 × 45 = €96.30/week
-€96.30 × 4.33 = €417/month per child
-```
-
-### 2. ECCE (Early Childhood Care & Education)
-
-**Purpose**: Free preschool program
-
-**Eligibility**: Children aged **2 years 8 months to 5 years 6 months** (approximately age 3+)
-
-**Benefit**: 15 hours/week free preschool care during school term
-
-#### ECCE Calculation
-
-```
-Weekly hours: 15 hours
-Annual weeks: 38 weeks (school term only)
-Estimated hourly rate: €7/hour
-Annual saving: 15 × 38 × €7 = €3,990
-Monthly saving (averaged): €3,990 / 12 = €333/month per child
-```
-
-**Note**: The calculator averages ECCE savings over 12 months for easier budgeting.
-
----
-
-## Childcare Type Logic
-
-The calculator applies different subsidy rules based on childcare type:
-
-### Registered Childcare (Crèche/Registered Childminder)
-
-✅ **Receives NCS subsidy**  
-✅ **Receives ECCE** (if age-eligible)
-
-```
-Monthly Cost = Base Cost - NCS Subsidy - ECCE Saving
-```
-
-**Example (1 child, 3 years old, €1,200/month base cost, €417 NCS, €333 ECCE):**
-
-```
-€1,200 - €417 - €333 = €450 out-of-pocket
-```
-
-### Unregistered Childcare (Unregistered Childminder)
-
-❌ **No NCS subsidy**  
-✅ **Receives ECCE** (if age-eligible and using registered preschool separately)
-
-```
-Monthly Cost = Base Cost - ECCE Saving
-```
-
-**Example (1 child, 3 years old, €1,000/month base cost, €333 ECCE):**
-
-```
-€1,000 - €333 = €667 out-of-pocket
-```
-
-### Nanny (Home Care)
-
-❌ **No NCS subsidy**  
-❌ **No ECCE**
-
-```
-Monthly Cost = Base Cost (no subsidies)
-```
-
-**Example (1 child, €1,800/month base cost):**
-
-```
-€1,800 out-of-pocket (full cost)
+PRSI = gross × 0.04125
 ```
 
 ---
 
-## Multiple Children
-
-All subsidies are **multiplied by the number of children**:
+## Step 4 — Net income
 
 ```
-Total NCS = (NCS per child) × Number of children
-Total ECCE = (ECCE per child) × Number of children
-Total Cost = (Base cost per child × Number of children) - Total NCS - Total ECCE
+net annual = gross − income tax − USC − PRSI
+net monthly = round(net annual / 12)
 ```
 
-**Example (2 children, both age 3+, registered care):**
+For **married two incomes**: both partners' net annuals are summed. This combined household net is used as the NCS **reckonable income** (see Step 5).
+
+For **pension contributions**: pension is subtracted from net monthly *after* tax to give the display take-home. It does **not** reduce NCS reckonable income (pension is treated here as a post-tax deduction; occupational pension schemes that are pre-tax would already reduce gross before this calculation).
 
 ```
-Base cost:     €1,200/month × 2 = €2,400
-NCS subsidy:   €417 × 2 = €834
-ECCE saving:   €333 × 2 = €666
-Out-of-pocket: €2,400 - €834 - €666 = €900
+display net monthly = net monthly − monthly pension contribution
 ```
+
+---
+
+## Step 5 — NCS Subsidy
+
+### What NCS is
+
+The National Childcare Scheme provides an hourly subsidy toward registered childcare costs. It has two components:
+- **Universal subsidy**: €2.14/hr for everyone with a child in registered care
+- **Income-assessed subsidy**: additional top-up that tapers to zero above €60,000 reckonable income
+
+**Not eligible**: unregistered childminders, nannies, au pairs, family members.
+
+### Reckonable income
+
+NCS reckonable income is the **combined household net income after tax, USC, and PRSI** — i.e., `taxResult.netAnnual`. For a single parent this is their own net annual. For a married couple with two incomes it is the sum of both partners' net annuals.
+
+### Multiple child discount — corrected
+
+> ⚠️ Previous versions did not include this. It is part of the official NCS calculation.
+
+Before applying the income taper, the reckonable income is reduced:
+
+| Children in care | Discount |
+|------------------|----------|
+| 1 child | €0 |
+| 2 children | −€4,300 |
+| 3+ children | −€8,600 |
+
+```
+adjusted income = max(0, reckonable income − discount)
+```
+
+This adjusted income is what is checked against the taper thresholds.
+
+### Age-banded NCS max rates — corrected
+
+> ⚠️ Previous versions used a flat €3.75/hr for all ages. The actual NCS rates vary by age. An infant can receive €5.10/hr — €1.35/hr more, which is ~€263/month difference at 45 hrs/week.
+
+| Age band | Max hourly rate |
+|----------|----------------|
+| Under 12 months (infant) | **€5.10** |
+| 12–35 months (toddler) | **€4.35** |
+| 3–5 years (preschool) | **€3.95** |
+| 5–15 years (school age) | **€3.75** |
+
+The max rate is for the **youngest child**. All children are assumed to be the same age band for simplicity.
+
+### Taper calculation
+
+```
+If adjusted income < €26,000:
+  hourly rate = max rate (age band)
+
+If adjusted income ≥ €60,000:
+  hourly rate = €2.14 (universal only)
+
+If €26,000 ≤ adjusted income < €60,000:
+  position = (adjusted income − 26,000) / (60,000 − 26,000)
+  hourly rate = max rate − (position × (max rate − 2.14))
+```
+
+This is a **linear taper** from the age-specific max down to €2.14.
+
+### Monthly subsidy calculation
+
+```
+subsidised hours = min(hours per week, 45)
+monthly subsidy = round(hourly rate × subsidised hours × 4.33)
+```
+
+The 4.33 factor is the average weeks per month (52 ÷ 12).
+
+### Subsidy cap
+
+The subsidy is capped so it cannot exceed the actual monthly childcare cost:
+```
+subsidy applied = min(monthly subsidy × num children, gross childcare cost)
+```
+
+### Example — married two incomes, combined net €80,000, 2 children (toddlers), 45 hrs/week, registered care
+
+```
+Reckonable income          = €80,000
+Multi-child discount (×2)  = −€4,300
+Adjusted income            = €75,700
+
+€75,700 ≥ €60,000 → universal rate only: €2.14/hr
+
+Monthly subsidy per child  = €2.14 × 45 × 4.33 = €417.07
+Total subsidy (2 children) = €834.14/mo
+```
+
+### Example — single, net €38,000, 1 infant, 45 hrs/week, registered care
+
+```
+Reckonable income = €38,000
+No discount (1 child)
+
+Position = (38,000 − 26,000) / (60,000 − 26,000) = 12,000 / 34,000 = 35.3%
+Hourly rate = 5.10 − (0.353 × (5.10 − 2.14))
+            = 5.10 − (0.353 × 2.96)
+            = 5.10 − 1.04
+            = €4.06/hr
+
+Monthly subsidy = €4.06 × 45 × 4.33 = €791/mo
+```
+
+---
+
+## Step 6 — ECCE (Early Childhood Care and Education)
+
+ECCE provides **15 free hours per week** of preschool during the school term (38 weeks/year). It applies to children aged approximately 2 years 8 months to 5 years 6 months — mapped in the calculator to the **"preschool" age band**.
+
+```
+If child age band = 'preschool':
+  weekly hours free = 15
+  annual saving = 15 × 38 × €7   (€7 = estimated average crèche hourly rate)
+  monthly saving = round(annual saving / 12) = €333/month per child
+```
+
+The saving is averaged across 12 months for budgeting purposes (ECCE only runs during school term but families tend to think in monthly costs).
+
+**Not eligible**: infant, toddler, school-age bands.
+
+---
+
+## Step 7 — Final childcare out-of-pocket
+
+| Provider type | NCS | ECCE |
+|---------------|-----|------|
+| Registered crèche / childminder | ✅ | ✅ if preschool age |
+| Unregistered childminder | ❌ | ✅ if preschool age (via separate registered preschool) |
+| Nanny | ❌ | ❌ |
+
+```
+Registered:
+  out of pocket = max(0, (cost × children) − subsidy applied − ecce saving × children)
+
+Unregistered:
+  out of pocket = max(0, (cost × children) − ecce saving × children)
+
+Nanny:
+  out of pocket = cost × children
+```
+
+---
+
+## Step 8 — Amount left and key metrics
+
+```
+amount left = display net monthly − out of pocket
+
+% retained = round((amount left / display net monthly) × 100)
+
+effective hourly rate = amount left / (hours per week × 4.33)
+```
+
+**Retention strength labels:**
+- ≥ 60% retained → **Strong**
+- 40–59% retained → **Moderate**
+- < 40% retained → **Weak**
+
+---
+
+## Step 9 — METR (Marginal Effective Tax Rate)
+
+### What METR is
+
+METR measures how much of an extra **€1,000 in gross salary** you actually keep, once income tax and NCS subsidy withdrawal are both accounted for. A high METR means earning more barely improves your financial position.
+
+This is the metric that explains the "childcare trap": at certain income levels, a pay rise triggers both higher tax *and* a reduction in NCS subsidy, so the combined effective marginal rate can exceed 80%.
+
+### METR formula
+
+```
+delta = €1,000
+
+base net  = net annual income at current gross (user only, not combined)
+new net   = net annual income at (gross + delta)
+net gain  = new net − base net
+
+base sub  = (monthly NCS subsidy at current reckonable income) × 12
+new sub   = (monthly NCS subsidy at reckonable income + net gain) × 12
+subsidy loss = max(0, base sub − new sub)
+
+total lost = (delta − net gain) + subsidy loss
+METR = min(99, max(0, round((total lost / delta) × 100)))
+```
+
+The METR uses the user's **individual** net gain (not the combined household), because it is measuring the effect of *that person* earning more. The subsidy loss is calculated against the full reckonable income because the NCS uses combined family income.
+
+### Interpreting METR
+
+| METR | Meaning |
+|------|---------|
+| < 45% | Reasonable — earning more translates well into take-home |
+| 45–59% | Elevated — a notable portion of any raise disappears |
+| ≥ 60% | High — ESRI identifies this range as a significant work disincentive for moderate-income families |
+
+METR is only shown for **registered childcare** because the NCS income taper is what creates the subsidy-withdrawal effect. For nannies and unregistered care there is no NCS taper, so METR equals the standard marginal income tax + USC + PRSI rate only.
+
+### Example
+
+Single parent, €55,000 gross, net €42,100, 1 infant, 45 hrs/week, registered care:
+
+```
+base net (€55k)  = €42,100
+new net (€56k)   = €42,661   → net gain = €561
+
+base sub = NCS at €42,100 = ~€4.06/hr → €791/mo → €9,492/yr
+new sub  = NCS at €42,661 = ~€4.01/hr → €781/mo → €9,372/yr
+subsidy loss = €9,492 − €9,372 = €120/yr
+
+total lost = (€1,000 − €561) + €120 = €559
+METR = round(559 / 1000 × 100) = 56%
+```
+
+This parent keeps only €441 of every extra €1,000 earned — 56% disappears to tax and subsidy withdrawal combined.
 
 ---
 
 ## Scenario Comparison
 
-The calculator allows comparison of three work scenarios:
+The calculator compares three scenarios using the same inputs:
 
-### Full-Time (100% work)
+| Scenario | Salary | Hours | Childcare costs |
+|----------|--------|-------|----------------|
+| Full-time | 100% of gross | 100% of hours | 100% of costs |
+| Part-time (3 days) | 60% of gross | 60% of hours | 60% of costs |
+| Not returning | €0 | 0 | €0 |
 
-- **Salary**: Full gross salary
-- **Hours**: Full hours/week
-- **Childcare**: Full childcare costs
-- **Subsidies**: Full NCS + ECCE
-
-### Part-Time (60% work / 3 days per week)
-
-- **Salary**: 60% of gross salary
-- **Hours**: 60% of hours/week
-- **Childcare**: 60% of childcare costs (reduced hours)
-- **Subsidies**: Adjusted NCS (based on lower income + lower hours) + ECCE
-
-**Note**: Tax bands change with lower income, so net percentage may be higher
-
-### Not Working (0% work)
-
-- **Salary**: €0
-- **Hours**: 0
-- **Childcare**: €0 (no childcare needed)
-- **Amount Left**: €0
+Each scenario runs the full tax + NCS + ECCE calculation independently. Because NCS subsidy is income-dependent, the part-time scenario often shows a higher hourly rate than full-time — the subsidy increases as income falls, partially offsetting the salary reduction.
 
 ---
 
-## Key Formulas Summary
+## Important assumptions and limitations
 
-### 1. Final Monthly Take-Home
+| Assumption | Value / note |
+|------------|-------------|
+| Tax year | 2025 (Budget 2025 rates) |
+| Weeks per month | 4.33 (52 ÷ 12) |
+| ECCE hourly rate estimate | €7/hr (mid-range Dublin average) |
+| ECCE school weeks | 38 weeks/year |
+| NCS hours cap | 45 hrs/week |
+| NCS rates | September 2024 schedule (NCS.gov.ie) |
+| PRSI | Employee Class A1: 4.125% |
+| Pension | Treated as post-tax deduction for display; does not reduce reckonable income |
+| Child ages | All children assumed to be in the same age band as the youngest |
+| Married two incomes | Each spouse assessed individually, then combined for household view |
+| ECCE | Only the "preschool" age band (≈ 3–5 yrs) qualifies |
 
-```
-Amount Left = Net Monthly Income - Out-of-Pocket Childcare Cost
-```
+### What the calculator does not model
 
-### 2. Percentage of Net Pay Retained
-
-```
-Percentage Kept = (Amount Left / Net Monthly Income) × 100
-```
-
-### 3. Effective Hourly Rate
-
-```
-Hours per Month = Hours per Week × 4.33
-Hourly Value = Amount Left / Hours per Month
-```
-
-### 4. Visual Bar Chart Percentages
-
-```
-Take-home % = (Amount Left / Gross Monthly) × 100
-Childcare % = (Out-of-Pocket / Gross Monthly) × 100
-Tax % = 100 - Take-home % - Childcare %
-```
+- Pension tax relief (pre-tax occupational pension would reduce taxable gross)
+- Working Family Payment or other welfare top-ups
+- Back-to-education allowance
+- Benefit-in-kind income
+- Self-employment income (assumes PAYE)
+- Dublin Living Wage or minimum wage caps
+- Actual crèche fee variation by provider (uses user-entered cost)
 
 ---
 
-## Important Assumptions
+## Sources
 
-1. **Tax Year**: 2025 Irish tax rates and bands
-2. **Location**: Dublin (for childcare cost context)
-3. **Weeks per month**: 4.33 (52 weeks / 12 months)
-4. **ECCE hourly rate estimate**: €7/hour
-5. **NCS hours cap**: 45 hours/week maximum
-6. **ECCE duration**: 38 weeks/year (school term)
-7. **Marital tax**: Married couples can choose joint or separate assessment; calculator assumes joint
-8. **PRSI**: Standard employee rate of 4.125%
-
----
-
-## Critical Calculator Fix History
-
-### Bug Fix: Nanny NCS Subsidy (March 2025)
-
-**Issue**: Nanny care was incorrectly receiving NCS subsidy  
-**Fix**: Added explicit check that nanny care receives NO subsidies  
-**Impact**: Nanny care now correctly shows full out-of-pocket cost
-
-### Bug Fix: Multi-line Dynamic Import (March 2025)
-
-**Issue**: Ternary expression in dynamic import causing syntax errors  
-**Fix**: Corrected TypeScript syntax for conditional rendering  
-**Impact**: Calculator displays context-aware cost ranges correctly
+| Item | Source |
+|------|--------|
+| Income tax bands and credits | [Revenue.ie — Tax credits and reliefs 2025](https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/tax-relief-charts/index.aspx) |
+| Tax credits (€3,875 single) | [MyTaxRebate.ie — 2025 Tax Credits](https://www.mytaxrebate.ie/tax-credits) |
+| USC bands | [Revenue.ie — Universal Social Charge](https://www.revenue.ie/en/jobs-and-pensions/usc/index.aspx) |
+| NCS subsidy rates | [NCS.gov.ie — September 2024 rates](https://www.ncs.gov.ie) |
+| NCS income thresholds | [Citizens Information — National Childcare Scheme](https://www.citizensinformation.ie/en/education/pre-school-education-and-childcare/national-childcare-scheme/) |
+| NCS multiple child discount | [National Childcare Scheme — Multiple Child Discount](https://www.ncs.gov.ie) |
+| ECCE | [Citizens Information — ECCE](https://www.citizensinformation.ie/en/education/pre-school-education-and-childcare/early-childhood-care-and-education-scheme/) |
+| METR methodology | ESRI Research on work disincentives for moderate-income families |
 
 ---
 
-## Data Privacy
+## Change log
 
-The calculator operates **entirely in the browser** with no data storage by default. Users can optionally contribute anonymized responses to the MomOps research dataset via:
-
-- GDPR-compliant consent flow
-- Anonymized bands (salary bands, cost bands) instead of exact values
-- No personally identifiable information collected
-
----
-
-## Related Resources
-
-- **Irish Tax System**: [Revenue.ie](https://www.revenue.ie)
-- **National Childcare Scheme**: [NCS.gov.ie](https://www.ncs.gov.ie)
-- **ECCE Program**: [First5.gov.ie](https://www.first5.gov.ie)
-- **MomOps Research**: [MomOps.org](https://momops.org)
-
----
-
-_Last Updated: March 2026_  
-_Calculator Version: 2.0_  
-_Tax Year: 2025_
+| Version | Date | Change |
+|---------|------|--------|
+| 3.0 | April 2026 | Corrected tax credits (€3,875 single, €5,750 married one income); age-banded NCS rates; multi-child NCS income discount; per-person married_two assessment; METR added; pension input added; subsidy cap added |
+| 2.0 | March 2026 | Added ECCE, scenario comparison, effective hourly rate, waitlist penalty display |
+| 1.0 | February 2026 | Initial calculator: flat NCS rate, combined gross tax for married two incomes |
