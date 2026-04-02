@@ -107,7 +107,7 @@ export function ResearchContribution({
 
   if (step === 'consent') {
     return (
-      <div className="mt-8 bg-white rounded-xl border-2 border-[#E5E7EB] p-6 max-w-2xl mx-auto">
+      <div className="mt-8 bg-white rounded-xl border border-[#E5E7EB] p-6">
         <div className="flex items-start gap-4">
           <div className="w-12 h-12 rounded-full bg-[#7EACC4]/10 flex items-center justify-center flex-shrink-0">
             <Database className="w-6 h-6 text-[#7EACC4]" />
@@ -157,7 +157,7 @@ export function ResearchContribution({
 
   if (step === 'form') {
     return (
-      <div className="mt-8 bg-white rounded-xl border-2 border-[#E5E7EB] p-6 max-w-2xl mx-auto">
+      <div className="mt-8 bg-white rounded-xl border border-[#E5E7EB] p-6">
         <div className="flex items-start gap-4 mb-6">
           <div className="w-12 h-12 rounded-full bg-[#7EACC4]/10 flex items-center justify-center flex-shrink-0">
             <Users className="w-6 h-6 text-[#7EACC4]" />
@@ -295,7 +295,7 @@ export function ResearchContribution({
 
   if (step === 'submitted') {
     return (
-      <div className="mt-8 bg-gradient-to-br from-[#059669]/5 to-[#7EACC4]/5 rounded-xl border-2 border-[#059669] p-6 max-w-2xl mx-auto">
+      <div className="mt-8 bg-gradient-to-br from-[#059669]/5 to-[#7EACC4]/5 rounded-xl border border-[#059669] p-6">
         <div className="flex items-start gap-4">
           <div className="w-12 h-12 rounded-full bg-[#059669] flex items-center justify-center flex-shrink-0">
             <CheckCircle2 className="w-6 h-6 text-white" />

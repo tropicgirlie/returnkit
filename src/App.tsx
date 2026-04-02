@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { AlertCircle, ChevronDown, ChevronUp, CheckCircle2, Mail, Settings, Menu, X, Share2, Info, Briefcase, Clock, Baby, Star, Heart } from 'lucide-react';
 import { CopyButton } from './components/CopyButton';
-import { CrecheMap, loadCreches, saveCreches } from './components/CrecheMap';
+import { loadCreches, saveCreches } from './components/CrecheMap';
 import { AdminPanel, type CrecheEntry } from './components/AdminPanel';
 import { MaternityExplainerModal } from './components/MaternityExplainerModal';
 import { ResearchContribution } from './components/ResearchContribution';
@@ -1453,17 +1453,112 @@ Thank you,
         </div>
       </section>
 
-      {/* Crèche Directory */}
+      {/* Find Crèches */}
       <section id="map" className="bg-white border-b border-[#E5E7EB]">
         <div className="max-w-[760px] mx-auto px-5 py-10 sm:py-16">
           <div className="mb-8">
             <h2 className="text-[24px] font-semibold text-[#111827] mb-2">Find Crèches Near You</h2>
             <p className="text-[#6B7280]">
-              Community-maintained directory covering Dublin, Kildare, Meath &amp; Wicklow. Estimated wait times and openings.
+              The best approach is to check the official Tusla register first, then use Google Maps to see what's actually near you. Here's exactly how.
             </p>
           </div>
-          
-          <CrecheMap creches={creches} />
+
+          <div className="space-y-4">
+            {/* Step 1 */}
+            <div className="bg-[#F9FAFB] rounded-xl border border-[#E5E7EB] p-5 flex gap-4">
+              <div className="w-8 h-8 rounded-full bg-[#0D1F2D] text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">1</div>
+              <div>
+                <p className="font-semibold text-[#111827] mb-1">Open the Tusla Early Years register</p>
+                <p className="text-sm text-[#6B7280] mb-3">
+                  This is the official list of every Tusla-registered crèche, childminder, and preschool in Ireland. Only registered providers qualify for NCS subsidies and ECCE.
+                </p>
+                <a
+                  href="https://www.tusla.ie/services/family-community-support/early-years/information-for-parents/find-your-local-early-years-service/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-[#2563EB] hover:underline"
+                >
+                  Open Tusla Early Years register →
+                </a>
+              </div>
+            </div>
+
+            {/* Step 2 */}
+            <div className="bg-[#F9FAFB] rounded-xl border border-[#E5E7EB] p-5 flex gap-4">
+              <div className="w-8 h-8 rounded-full bg-[#0D1F2D] text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">2</div>
+              <div>
+                <p className="font-semibold text-[#111827] mb-1">Search by your county or area</p>
+                <p className="text-sm text-[#6B7280]">
+                  Filter by county, then by type — <strong>Full Day Care</strong> for full-time crèche, <strong>Childminder</strong> for home-based care, or <strong>Part-time Day Care</strong> for sessional places. Download the results as a list.
+                </p>
+              </div>
+            </div>
+
+            {/* Step 3 */}
+            <div className="bg-[#F9FAFB] rounded-xl border border-[#E5E7EB] p-5 flex gap-4">
+              <div className="w-8 h-8 rounded-full bg-[#0D1F2D] text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">3</div>
+              <div>
+                <p className="font-semibold text-[#111827] mb-1">Find them on Google Maps</p>
+                <p className="text-sm text-[#6B7280] mb-3">
+                  Open Google Maps and search <strong>"crèche near me"</strong> or <strong>"childcare [your area]"</strong>. Cross-reference the names against your Tusla list to confirm they're registered. Google Maps also shows reviews, photos, and opening hours.
+                </p>
+                <a
+                  href="https://www.google.com/maps/search/creche+near+me"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-[#2563EB] hover:underline"
+                >
+                  Search Google Maps →
+                </a>
+              </div>
+            </div>
+
+            {/* Step 4 */}
+            <div className="bg-[#F9FAFB] rounded-xl border border-[#E5E7EB] p-5 flex gap-4">
+              <div className="w-8 h-8 rounded-full bg-[#0D1F2D] text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">4</div>
+              <div>
+                <p className="font-semibold text-[#111827] mb-1">Contact 3–5 crèches and ask the right questions</p>
+                <p className="text-sm text-[#6B7280] mb-2">When you call or email, ask:</p>
+                <ul className="text-sm text-[#6B7280] space-y-1">
+                  <li>• Do you have availability for [age] from [month]?</li>
+                  <li>• What is the current waiting list time?</li>
+                  <li>• Are you registered with Tusla? (confirms NCS eligibility)</li>
+                  <li>• Do you accept NCS? What's your hourly rate?</li>
+                  <li>• Do you offer ECCE places? (if child is preschool age)</li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Step 5 */}
+            <div className="bg-[#F9FAFB] rounded-xl border border-[#E5E7EB] p-5 flex gap-4">
+              <div className="w-8 h-8 rounded-full bg-[#0D1F2D] text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">5</div>
+              <div>
+                <p className="font-semibold text-[#111827] mb-1">Apply for NCS as soon as you have a place</p>
+                <p className="text-sm text-[#6B7280] mb-3">
+                  NCS applications can take a few weeks to process. Apply at ncs.gov.ie once you have a confirmed start date and your crèche's Tusla registration number.
+                </p>
+                <a
+                  href="https://www.ncs.gov.ie"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-sm font-medium text-[#2563EB] hover:underline"
+                >
+                  Apply for NCS →
+                </a>
+              </div>
+            </div>
+
+            {/* Tip box */}
+            <div className="bg-[#FEF3C7] rounded-xl border border-[#FDE68A] p-5 flex gap-3">
+              <div className="text-lg flex-shrink-0">💡</div>
+              <div>
+                <p className="text-sm font-semibold text-[#92400E] mb-1">Waiting lists in Dublin average 18–24 months</p>
+                <p className="text-sm text-[#92400E]">
+                  Register with 3–5 crèches as early as possible — even before or during pregnancy. Most crèches allow you to join multiple waiting lists at no cost.
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
