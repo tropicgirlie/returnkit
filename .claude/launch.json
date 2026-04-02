@@ -3,14 +3,14 @@
   "configurations": [
     {
       "name": "returnkit",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "/bin/sh",
+      "runtimeArgs": ["-c", "cd /Users/Dublin-Osx/code/ReturnKit && PATH=/usr/local/bin:$PATH node node_modules/.bin/vite --port 3001"],
       "port": 3001
     },
     {
       "name": "femhealth",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "/bin/sh",
+      "runtimeArgs": ["-c", "cd /Users/Dublin-Osx/code/ReturnKit && PATH=/usr/local/bin:$PATH node node_modules/.bin/vite --port 3001"],
       "port": 3001
     }
   ]

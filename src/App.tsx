@@ -474,16 +474,6 @@ Thank you,
                   {link.label}
                 </a>
               ))}
-              <div className="pt-2 mt-2 border-t border-[#E5E7EB]">
-                <a
-                  href="https://www.facebook.com/groups/returnkit"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="block px-3 py-2.5 text-sm text-[#374151] hover:bg-[#F3F4F6] rounded-lg"
-                >
-                  Facebook Group
-                </a>
-              </div>
             </nav>
           </div>
         )}
@@ -1788,17 +1778,6 @@ Thank you,
                     </svg>
                     Sign the petition
                   </a>
-                  <a
-                    href="https://www.facebook.com/groups/returnkit"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 bg-white text-[#111827] rounded-lg hover:bg-[#F3F4F6] transition-colors text-sm font-semibold"
-                  >
-                    <svg className="w-4 h-4 text-[#1877F2]" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                    </svg>
-                    Join the conversation
-                  </a>
                 </div>
               </div>
 
@@ -1816,40 +1795,53 @@ Thank you,
       </main>
 
       {/* Footer */}
-      <footer className="bg-white py-10 border-t border-[#E5E7EB]">
+      <footer className="bg-[#F9FAFB] py-10 border-t border-[#E5E7EB]">
         <div className="max-w-[760px] mx-auto px-5">
-          <div className="space-y-4">
-            <div className="text-sm text-[#6B7280] space-y-1">
-              <TransparentLogo src={logoImage} alt="ReturnKit: The Real Cost of Returning to Work" className="h-[151px] mb-1" />
-              <p className="text-xs">March 2026 • Built by parents, for parents • Based on Budget 2025</p>
-            </div>
-            
-            {/* Community Link */}
-            <div>
-              <a 
-                href="https://www.facebook.com/groups/returnkit"
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 text-sm text-[#374151] bg-[#F9FAFB] border border-[#E5E7EB] rounded-lg hover:bg-[#F3F4F6] transition-colors"
-              >
-                <svg className="w-4 h-4 text-[#1877F2]" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
-                </svg>
-                Facebook Group
-              </a>
+          <div className="space-y-6">
+
+            {/* Tagline */}
+            <p className="text-xs text-[#6B7280]">March 2026 • Built by parents, for parents • Based on Budget 2025</p>
+
+            {/* Trust signals */}
+            <div className="flex flex-wrap gap-3">
+              {[
+                { icon: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z", label: "No data collected" },
+                { icon: "M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636", label: "No cookies" },
+                { icon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4", label: "Open source" },
+              ].map(({ icon, label }) => (
+                <span key={label} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#374151] bg-white border border-[#E5E7EB] rounded-full">
+                  <svg className="w-3.5 h-3.5 text-[#10B981]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d={icon} />
+                  </svg>
+                  {label}
+                </span>
+              ))}
             </div>
 
-            <div className="pt-4 border-t border-[#E5E7EB] flex items-center justify-between">
-              <p className="text-xs text-[#9CA3AF]">No data collected • No cookies • Open source</p>
+            {/* MomOps attribution + Admin */}
+            <div className="pt-5 border-t border-[#E5E7EB] flex items-center justify-between flex-wrap gap-3">
+              <p className="text-xs text-[#9CA3AF]">
+                Inspired by the{" "}
+                <a
+                  href="https://momops.org"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-[#6B7280] underline underline-offset-2 hover:text-[#374151] transition-colors"
+                >
+                  MomOps.org
+                </a>{" "}
+                framework
+              </p>
               <button
                 type="button"
                 onClick={() => setShowAdmin(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#9CA3AF] hover:text-[#6B7280] transition-colors"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#9CA3AF] hover:text-[#6B7280] transition-colors rounded-md hover:bg-white"
               >
                 <Settings className="w-3.5 h-3.5" />
                 Admin
               </button>
             </div>
+
           </div>
         </div>
       </footer>
