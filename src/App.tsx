@@ -22,6 +22,7 @@ const BabyBottle = ({ className }: { className?: string }) => (
 type ChildcareType = 'registered' | 'unregistered' | 'nanny';
 type MaritalStatus = 'single' | 'married_one' | 'married_two';
 type WorkScenario = 'fulltime' | 'parttime' | 'notworking';
+type ChildAge = 'infant' | 'toddler' | 'preschool' | 'school';
 
 export default function App() {
   // State
@@ -29,7 +30,8 @@ export default function App() {
   const [grossSalary, setGrossSalary] = useState(55000);
   const [partnerSalary, setPartnerSalary] = useState(45000);
   const [numChildren, setNumChildren] = useState(1);
-  const [childAge, setChildAge] = useState(1);
+  const [childAge, setChildAge] = useState<ChildAge>('toddler');
+  const [pension, setPension] = useState(0);
   const [childcareType, setChildcareType] = useState<ChildcareType>('registered');
   const [hoursPerWeek, setHoursPerWeek] = useState(45);
   const [monthlyCost, setMonthlyCost] = useState(1200);
@@ -102,125 +104,127 @@ export default function App() {
     return value.toLocaleString('en-IE');
   };
 
-  // ACCURATE 2025 IRISH TAX CALCULATION
+  // ── Per-person tax helper (Revenue 2025) ─────────────────────────────────────
+  // Tax credits: Personal €1,875 + Employee (PAYE) €2,000 = €3,875 per PAYE worker
+  // Married one income: 2× personal + 1× PAYE = €5,750
+  function calcPersonTax(income: number, isMarriedOneIncome = false) {
+    const cutoff  = isMarriedOneIncome ? 53000 : 44000;
+    const credits = isMarriedOneIncome ? 5750  : 3875;   // 2025 correct figures
+    const grossTax = income <= cutoff
+      ? income * 0.20
+      : cutoff * 0.20 + (income - cutoff) * 0.40;
+    const incomeTax = Math.max(0, grossTax - credits);
+
+    // USC 2025 bands (progressive per person)
+    let usc = 0, rem = income, prev = 0;
+    for (const [lim, rate] of [[12012, 0.005], [27382, 0.02], [70044, 0.035], [Infinity, 0.08]] as [number, number][]) {
+      const t = Math.min(rem, lim - prev);
+      if (t <= 0) break;
+      usc += t * rate;
+      prev = lim; rem -= t;
+    }
+
+    const prsi = income * 0.04125;
+    return { incomeTax, usc, prsi, annualNet: income - incomeTax - usc - prsi };
+  }
+
+  // ── ACCURATE 2025 IRISH TAX CALCULATION ──────────────────────────────────────
   function calculateNetIncome(gross: number, marital: MaritalStatus, partnerGross?: number) {
-    let totalGross = gross;
-    let totalIncomeTax = 0;
-    let totalUSC = 0;
-    let totalPRSI = 0;
-
-    // Income Tax Bands 2025
-    if (marital === 'single') {
-      const standardRateCutoff = 44000;
-      const taxCredits = 4000;
-      
-      if (gross <= standardRateCutoff) {
-        totalIncomeTax = (gross * 0.20) - taxCredits;
-      } else {
-        totalIncomeTax = ((standardRateCutoff * 0.20) + ((gross - standardRateCutoff) * 0.40)) - taxCredits;
-      }
-    } else if (marital === 'married_one') {
-      const standardRateCutoff = 53000;
-      const taxCredits = 8000;
-      
-      if (gross <= standardRateCutoff) {
-        totalIncomeTax = (gross * 0.20) - taxCredits;
-      } else {
-        totalIncomeTax = ((standardRateCutoff * 0.20) + ((gross - standardRateCutoff) * 0.40)) - taxCredits;
-      }
-    } else {
-      totalGross = gross + (partnerGross || 0);
-      const standardRateCutoff = 88000;
-      const taxCredits = 8000;
-      
-      if (totalGross <= standardRateCutoff) {
-        totalIncomeTax = (totalGross * 0.20) - taxCredits;
-      } else {
-        totalIncomeTax = ((standardRateCutoff * 0.20) + ((totalGross - standardRateCutoff) * 0.40)) - taxCredits;
-      }
+    if (marital === 'married_two' && partnerGross) {
+      // Each spouse assessed individually (more accurate than combined gross method)
+      const user    = calcPersonTax(gross);
+      const partner = calcPersonTax(partnerGross);
+      const totalGross = gross + partnerGross;
+      const totalDeductions = user.incomeTax + user.usc + user.prsi
+                            + partner.incomeTax + partner.usc + partner.prsi;
+      const netAnnual = totalGross - totalDeductions;
+      return {
+        grossAnnual: totalGross,
+        grossMonthly: Math.round(totalGross / 12),
+        incomeTax: Math.round(user.incomeTax + partner.incomeTax),
+        usc: Math.round(user.usc + partner.usc),
+        prsi: Math.round(user.prsi + partner.prsi),
+        totalDeductions: Math.round(totalDeductions),
+        netAnnual: Math.round(netAnnual),
+        netMonthly: Math.round(netAnnual / 12),
+        userNetAnnual: Math.round(user.annualNet),   // for METR (user's own net)
+      };
     }
 
-    // USC Calculation
-    const calculateUSC = (income: number) => {
-      let usc = 0;
-      if (income <= 12012) {
-        usc = income * 0.005;
-      } else if (income <= 27382) {
-        usc = (12012 * 0.005) + ((income - 12012) * 0.02);
-      } else if (income <= 70044) {
-        usc = (12012 * 0.005) + ((27382 - 12012) * 0.02) + ((income - 27382) * 0.035);
-      } else {
-        usc = (12012 * 0.005) + ((27382 - 12012) * 0.02) + ((70044 - 27382) * 0.035) + ((income - 70044) * 0.08);
-      }
-      return usc;
-    };
-
-    if (marital === 'married_two') {
-      totalUSC = calculateUSC(gross) + calculateUSC(partnerGross || 0);
-    } else {
-      totalUSC = calculateUSC(gross);
-    }
-
-    // PRSI 4.125%
-    totalPRSI = totalGross * 0.04125;
-
-    totalIncomeTax = Math.max(0, totalIncomeTax);
-
-    const netAnnual = totalGross - totalIncomeTax - totalUSC - totalPRSI;
-    const netMonthly = Math.round(netAnnual / 12);
-
+    const p = calcPersonTax(gross, marital === 'married_one');
     return {
-      grossAnnual: totalGross,
-      grossMonthly: Math.round(totalGross / 12),
-      incomeTax: Math.round(totalIncomeTax),
-      usc: Math.round(totalUSC),
-      prsi: Math.round(totalPRSI),
-      totalDeductions: Math.round(totalIncomeTax + totalUSC + totalPRSI),
-      netAnnual: Math.round(netAnnual),
-      netMonthly
+      grossAnnual: gross,
+      grossMonthly: Math.round(gross / 12),
+      incomeTax: Math.round(p.incomeTax),
+      usc: Math.round(p.usc),
+      prsi: Math.round(p.prsi),
+      totalDeductions: Math.round(p.incomeTax + p.usc + p.prsi),
+      netAnnual: Math.round(p.annualNet),
+      netMonthly: Math.round(p.annualNet / 12),
+      userNetAnnual: Math.round(p.annualNet),
     };
   }
 
-  // NCS Subsidy Calculation
-  function calculateNCSSubsidy(netAnnual: number, hoursPerWeek: number, childAge: number) {
-    const maxSubsidy = 3.75;
-    const universalSubsidy = 2.14;
-    
-    let hourlyRate = 0;
-    
-    if (netAnnual < 26600) {
-      hourlyRate = maxSubsidy;
-    } else if (netAnnual >= 60000) {
-      hourlyRate = universalSubsidy;
+  // ── NCS Subsidy Calculation (NCS.gov.ie rates, September 2024) ───────────────
+  // Age-banded max rates; universal floor €2.14/hr; multi-child income discount
+  const NCS_MAX_RATES: Record<ChildAge, number> = {
+    infant:    5.10,   // under 12 months
+    toddler:   4.35,   // 12–35 months
+    preschool: 3.95,   // 3–5 years
+    school:    3.75,   // 5–15 years
+  };
+
+  function calculateNCSSubsidy(reckonableIncome: number, childAge: ChildAge, hoursPerWeek: number, numChildren: number) {
+    const maxRate       = NCS_MAX_RATES[childAge];
+    const universalRate = 2.14;
+    const hrs = Math.min(hoursPerWeek, 45);
+
+    // Multiple child discount reduces reckonable income threshold
+    const discount = numChildren === 2 ? 4300 : numChildren >= 3 ? 8600 : 0;
+    const adjustedIncome = Math.max(0, reckonableIncome - discount);
+
+    let hourlyRate: number;
+    if (adjustedIncome < 26000) {
+      hourlyRate = maxRate;
+    } else if (adjustedIncome >= 60000) {
+      hourlyRate = universalRate;
     } else {
-      const range = 60000 - 26600;
-      const position = netAnnual - 26600;
-      const percentage = position / range;
-      hourlyRate = maxSubsidy - ((maxSubsidy - universalSubsidy) * percentage);
+      const position = (adjustedIncome - 26000) / (60000 - 26000);
+      hourlyRate = maxRate - position * (maxRate - universalRate);
     }
 
-    const subsidizedHours = Math.min(hoursPerWeek, 45);
-    const weeklySubsidy = hourlyRate * subsidizedHours;
-    const monthlySubsidy = Math.round(weeklySubsidy * 4.33);
-    
+    const monthlySubsidy = Math.round(hourlyRate * hrs * 4.33);
     return {
       hourlyRate: hourlyRate.toFixed(2),
-      monthlySubsidy
+      monthlySubsidy,
+      adjustedReckonableIncome: Math.round(adjustedIncome),
     };
   }
 
-  // ECCE Calculation (free preschool hours)
-  function calculateECCE(childAge: number) {
-    // ECCE: 15 hours/week free for children aged 2y8m to 5y6m
-    // Approximately age 3+
-    const eligible = childAge >= 3;
+  // ── ECCE (Free preschool — children aged ~2y8m to 5y6m, "preschool" band) ────
+  function calculateECCE(childAge: ChildAge) {
+    const eligible = childAge === 'preschool';
     const weeklyHoursFree = eligible ? 15 : 0;
-    // ECCE runs 38 weeks/year (school term), so monthly savings averaged over 12 months
-    // Average crèche hourly rate ~€6-8, use €7 as estimate
-    const estimatedHourlyRate = 7;
-    const annualSaving = weeklyHoursFree * 38 * estimatedHourlyRate;
+    // 38 school weeks/year, avg crèche rate ~€7/hr
+    const annualSaving = weeklyHoursFree * 38 * 7;
     const monthlySaving = Math.round(annualSaving / 12);
     return { eligible, weeklyHoursFree, monthlySaving };
+  }
+
+  // ── METR: Marginal Effective Tax Rate ─────────────────────────────────────────
+  // % of an extra €1,000 gross lost to income tax + NCS subsidy withdrawal
+  function calculateMETR(gross: number, marital: MaritalStatus, reckonableIncome: number, childAge: ChildAge, hoursPerWeek: number, numChildren: number): number {
+    const delta = 1000;
+    const baseNet = calcPersonTax(gross, marital === 'married_one').annualNet;
+    const newNet  = calcPersonTax(gross + delta, marital === 'married_one').annualNet;
+    const netGain = newNet - baseNet;
+
+    const baseSub = calculateNCSSubsidy(reckonableIncome, childAge, hoursPerWeek, numChildren).monthlySubsidy * 12;
+    const newSub  = calculateNCSSubsidy(reckonableIncome + netGain, childAge, hoursPerWeek, numChildren).monthlySubsidy * 12;
+    const subsidyLoss = Math.max(0, baseSub - newSub);
+
+    const totalLost = (delta - netGain) + subsidyLoss;
+    return Math.min(99, Math.max(0, Math.round((totalLost / delta) * 100)));
   }
 
   // Calculate results
@@ -230,8 +234,14 @@ export default function App() {
     maritalStatus === 'married_two' ? partnerSalary : undefined
   );
 
-  const subsidy = calculateNCSSubsidy(taxResult.netAnnual, hoursPerWeek, childAge);
+  // Reckonable income for NCS = combined family net after tax/USC/PRSI (before pension)
+  const reckonableIncome = taxResult.netAnnual;
+
+  const subsidy = calculateNCSSubsidy(reckonableIncome, childAge, hoursPerWeek, numChildren);
   const ecce = calculateECCE(childAge);
+
+  // Pension reduces take-home but not NCS reckonable income
+  const displayNetMonthly = taxResult.netMonthly - pension;
 
   // Childcare calculations
   let childcareCostMonthly = monthlyCost * numChildren;
@@ -240,26 +250,31 @@ export default function App() {
   let outOfPocketMonthly = childcareCostMonthly;
 
   if (childcareType === 'registered') {
-    // Registered childcare facilities (crèches, childminders) get NCS + ECCE
-    subsidyAmount = subsidy.monthlySubsidy * numChildren;
+    // Registered childcare: NCS subsidy capped at actual cost + ECCE
+    subsidyAmount = Math.min(subsidy.monthlySubsidy * numChildren, childcareCostMonthly);
     ecceSaving = ecce.monthlySaving * numChildren;
     outOfPocketMonthly = Math.max(0, childcareCostMonthly - subsidyAmount - ecceSaving);
   } else if (childcareType === 'unregistered') {
-    // Unregistered childcare: no NCS, but ECCE might apply if using separate registered preschool
+    // Unregistered: no NCS, but ECCE may apply via separate registered preschool
     ecceSaving = ecce.monthlySaving * numChildren;
     outOfPocketMonthly = Math.max(0, childcareCostMonthly - ecceSaving);
   } else {
-    // Nanny (home care): NO NCS subsidy, NO ECCE - pay full cost
+    // Nanny: NO NCS, NO ECCE
     outOfPocketMonthly = childcareCostMonthly;
   }
 
-  // Final calculation
-  const amountLeft = taxResult.netMonthly - outOfPocketMonthly;
-  const percentageKept = taxResult.netMonthly > 0 ? Math.round((amountLeft / taxResult.netMonthly) * 100) : 0;
+  // Final calculation (pension already deducted from displayNetMonthly)
+  const amountLeft = displayNetMonthly - outOfPocketMonthly;
+  const percentageKept = displayNetMonthly > 0 ? Math.round((amountLeft / displayNetMonthly) * 100) : 0;
+
+  // METR — only meaningful for registered NCS-eligible childcare
+  const metr = childcareType === 'registered'
+    ? calculateMETR(grossSalary, maritalStatus, reckonableIncome, childAge, hoursPerWeek, numChildren)
+    : null;
   
   // Calculate percentages for bar chart
-  const takeHomePercent = taxResult.grossMonthly > 0 ? Math.round((amountLeft / taxResult.grossMonthly) * 100) : 0;
-  const childcarePercent = taxResult.grossMonthly > 0 ? Math.round((outOfPocketMonthly / taxResult.grossMonthly) * 100) : 0;
+  const takeHomePercent = displayNetMonthly > 0 ? Math.round((amountLeft / displayNetMonthly) * 100) : 0;
+  const childcarePercent = displayNetMonthly > 0 ? Math.round((outOfPocketMonthly / displayNetMonthly) * 100) : 0;
   const taxPercent = Math.max(0, 100 - takeHomePercent - childcarePercent);
 
   // Hourly value
@@ -294,7 +309,7 @@ export default function App() {
     const adjustedGross = Math.round(grossSalary * salaryMultiplier);
     
     const tax = calculateNetIncome(adjustedGross, maritalStatus, maritalStatus === 'married_two' ? partnerSalary : undefined);
-    const ncs = calculateNCSSubsidy(tax.netAnnual, hours, childAge);
+    const ncs = calculateNCSSubsidy(tax.netAnnual, childAge, hours, numChildren);
     
     const adjustedMonthlyCost = scenario === 'parttime' 
       ? Math.round(monthlyCost * 0.6) * numChildren 
@@ -559,7 +574,8 @@ Thank you,
                     setGrossSalary(55000);
                     setPartnerSalary(45000);
                     setNumChildren(1);
-                    setChildAge(1);
+                    setChildAge('toddler');
+                    setPension(0);
                     setChildcareType('registered');
                     setHoursPerWeek(45);
                     setMonthlyCost(1200);
@@ -640,6 +656,27 @@ Thank you,
                     <p className="mt-1 text-xs text-[#9CA3AF]">Annual</p>
                   </div>
                 )}
+
+              {/* Pension */}
+              <div className="mt-4">
+                <label htmlFor="pension" className="block text-xs font-medium text-[#6B7280] uppercase tracking-wider mb-2">
+                  Monthly Pension <span className="text-[#9CA3AF] normal-case tracking-normal">(optional)</span>
+                </label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9CA3AF]">€</span>
+                  <input
+                    id="pension"
+                    type="text"
+                    inputMode="numeric"
+                    value={pension === 0 ? '' : formatNumberWithCommas(pension)}
+                    onChange={(e) => setPension(parseNumberInput(e.target.value))}
+                    onFocus={(e) => e.target.select()}
+                    className="w-full h-11 pl-7 pr-3 text-sm bg-white border border-[#D1D5DB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent"
+                    placeholder="0"
+                  />
+                </div>
+                <p className="mt-1 text-xs text-[#9CA3AF]">Reduces take-home; doesn't affect NCS reckonable income</p>
+              </div>
               </div>
             </div>
 
@@ -672,13 +709,13 @@ Thank you,
                   <select
                     id="child-age"
                     value={childAge}
-                    onChange={(e) => setChildAge(Number(e.target.value))}
+                    onChange={(e) => setChildAge(e.target.value as ChildAge)}
                     className="w-full h-11 px-3 text-sm bg-white border border-[#D1D5DB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent"
                   >
-                    <option value="0">Under 1</option>
-                    <option value="1">1 year</option>
-                    <option value="2">2 years</option>
-                    <option value="3">3+ years (ECCE eligible)</option>
+                    <option value="infant">Under 12 months</option>
+                    <option value="toddler">12–35 months</option>
+                    <option value="preschool">3–5 yrs (ECCE eligible)</option>
+                    <option value="school">5–15 yrs (school age)</option>
                   </select>
                 </div>
               </div>
@@ -798,17 +835,17 @@ Thank you,
                   </div>
                   
                   <div className="flex h-7 rounded-md overflow-hidden mb-2">
-                    <div 
-                      className="bg-[#E24B4A] flex items-center justify-center text-white text-[11px] font-medium" 
-                      style={{ width: `${Math.round((outOfPocketMonthly / taxResult.netMonthly) * 100)}%` }}
+                    <div
+                      className="bg-[#E24B4A] flex items-center justify-center text-white text-[11px] font-medium"
+                      style={{ width: `${Math.round((outOfPocketMonthly / displayNetMonthly) * 100)}%` }}
                     >
-                      {Math.round((outOfPocketMonthly / taxResult.netMonthly) * 100) > 15 && `${childcareType === 'nanny' ? 'Nanny' : 'Childcare'} ${Math.round((outOfPocketMonthly / taxResult.netMonthly) * 100)}%`}
+                      {Math.round((outOfPocketMonthly / displayNetMonthly) * 100) > 15 && `${childcareType === 'nanny' ? 'Nanny' : 'Childcare'} ${Math.round((outOfPocketMonthly / displayNetMonthly) * 100)}%`}
                     </div>
-                    <div 
-                      className="bg-[#639922] flex items-center justify-center text-white text-[11px] font-medium" 
-                      style={{ width: `${Math.round((amountLeft / taxResult.netMonthly) * 100)}%` }}
+                    <div
+                      className="bg-[#639922] flex items-center justify-center text-white text-[11px] font-medium"
+                      style={{ width: `${Math.round((amountLeft / displayNetMonthly) * 100)}%` }}
                     >
-                      {Math.round((amountLeft / taxResult.netMonthly) * 100) > 15 && `Yours ${Math.round((amountLeft / taxResult.netMonthly) * 100)}%`}
+                      {Math.round((amountLeft / displayNetMonthly) * 100) > 15 && `Yours ${Math.round((amountLeft / displayNetMonthly) * 100)}%`}
                     </div>
                   </div>
                   
@@ -859,6 +896,12 @@ Thank you,
                       <span className="text-sm text-[#6B6B6B]">Net take-home</span>
                       <span className="text-sm font-medium text-[#1A1A1A] tabular-nums">€{taxResult.netMonthly.toLocaleString()}</span>
                     </div>
+                    {pension > 0 && (
+                      <div className="flex justify-between items-baseline py-2 border-b-[0.5px] border-[#E0E0E0]">
+                        <span className="text-sm text-[#6B6B6B]">Pension contribution</span>
+                        <span className="text-sm font-medium text-[#A32D2D] tabular-nums">−€{pension.toLocaleString()}</span>
+                      </div>
+                    )}
                     <div className="flex justify-between items-baseline py-2 border-b-[0.5px] border-[#E0E0E0]">
                       <span className="text-sm text-[#6B6B6B]">
                         {childcareType === 'nanny' && 'Nanny — no NCS, no ECCE'}
@@ -889,6 +932,35 @@ Thank you,
                     </div>
                   </div>
                 </div>
+
+                {/* METR — Marginal Effective Tax Rate */}
+                {metr !== null && (
+                  <div className={`rounded-xl border p-5 mb-3 ${
+                    metr >= 60 ? 'bg-[#FEF2F2] border-[#FEE2E2]' :
+                    metr >= 45 ? 'bg-[#FFFBEB] border-[#FDE68A]' :
+                                 'bg-[#F0FDF4] border-[#BBF7D0]'
+                  }`}>
+                    <div className="flex items-start justify-between gap-4">
+                      <div className="flex-1">
+                        <div className="text-[11px] font-medium uppercase tracking-wider text-[#6B6B6B] mb-1">
+                          Marginal Effective Tax Rate
+                        </div>
+                        <div className={`text-[28px] font-semibold tabular-nums leading-none mb-2 ${
+                          metr >= 60 ? 'text-[#A32D2D]' : metr >= 45 ? 'text-[#B45309]' : 'text-[#2A6041]'
+                        }`}>
+                          {metr}%
+                        </div>
+                        <p className="text-xs text-[#6B6B6B] leading-relaxed">
+                          {metr >= 60
+                            ? `For every extra €1,000 earned, you keep only ~€${1000 - metr * 10} after income tax and NCS subsidy withdrawal. ESRI identifies this as a significant work disincentive.`
+                            : metr >= 45
+                            ? 'A substantial portion of any additional earnings is lost to combined taxation and reduced NCS subsidy.'
+                            : 'Additional earnings translate reasonably well into take-home pay at your income level.'}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
 
                 {/* Waitlist Penalty (only for nanny) */}
                 {childcareType === 'nanny' && (() => {
