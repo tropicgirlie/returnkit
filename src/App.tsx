@@ -283,8 +283,8 @@ export default function App() {
 
   // Retention strength
   const retentionStrength = percentageKept >= 60 ? 'Strong' : percentageKept >= 40 ? 'Moderate' : 'Weak';
-  const retentionColor = percentageKept >= 60 ? '#10B981' : percentageKept >= 40 ? '#F59E0B' : '#EF4444';
-  const retentionBg = percentageKept >= 60 ? '#D1FAE5' : percentageKept >= 40 ? '#FEF3C7' : '#FEE2E2';
+  const retentionColor = percentageKept >= 60 ? '#4E8C6A' : percentageKept >= 40 ? '#2563EB' : '#B05555';
+  const retentionBg = percentageKept >= 60 ? '#E2F0EA' : percentageKept >= 40 ? '#DBEAFE' : '#F5E5E5';
 
   // Calculate shortage cost for unsubsidized care
   const registeredCost = childcareCostMonthly - (subsidy.monthlySubsidy * numChildren);
@@ -434,16 +434,16 @@ Thank you,
       </a>
       
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white border-b border-[#E5E7EB] overflow-hidden">
+      <header className="sticky top-0 z-50 bg-white border-b border-[#E2E8F0]">
         <div className="max-w-[760px] mx-auto px-5 h-14 flex items-center justify-between">
           <a href="#" className="flex items-center">
             <TransparentLogo src={logoImage} alt="ReturnKit" className="h-[95px]" />
           </a>
-          
+
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
-              <a key={link.href} href={link.href} className="text-sm text-[#6B7280] hover:text-[#111827] transition-colors">
+              <a key={link.href} href={link.href} className="text-sm text-[#64748B] hover:text-[#0F172A] transition-colors">
                 {link.label}
               </a>
             ))}
@@ -453,7 +453,7 @@ Thank you,
           <button
             type="button"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="md:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[#F3F4F6] transition-colors text-[#6B7280]"
+            className="md:hidden w-10 h-10 flex items-center justify-center rounded-lg hover:bg-[#F1F5F9] transition-colors text-[#64748B]"
             aria-label={mobileMenuOpen ? 'Close menu' : 'Open menu'}
           >
             {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
@@ -462,14 +462,14 @@ Thank you,
 
         {/* Mobile Nav Dropdown */}
         {mobileMenuOpen && (
-          <div className="md:hidden border-t border-[#E5E7EB] bg-white">
+          <div className="md:hidden border-t border-[#E2E8F0] bg-white">
             <nav className="max-w-[760px] mx-auto px-5 py-3 space-y-1">
               {navLinks.map((link) => (
                 <a
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2.5 text-sm text-[#374151] hover:bg-[#F3F4F6] rounded-lg transition-colors"
+                  className="block px-3 py-2.5 text-sm text-[#374151] hover:bg-[#F8FAFC] rounded-lg transition-colors"
                 >
                   {link.label}
                 </a>
@@ -480,70 +480,63 @@ Thank you,
       </header>
 
       <main id="main-content">
-      {/* Hero Section — two-column split */}
-      <section className="bg-[#0D1F2D] py-10 sm:py-16 border-b border-[#1A3348] relative overflow-hidden">
-        {/* Playful floating icons */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-          <Star className="absolute top-6 right-[12%] w-5 h-5 text-[#F59E0B]/15 rotate-12" />
-          <Heart className="absolute top-[20%] right-[8%] w-4 h-4 text-[#EC4899]/12" />
-          <Baby className="absolute bottom-8 left-[6%] w-6 h-6 text-[#60A5FA]/10 -rotate-12" />
-          <BabyBottle className="absolute top-[35%] left-[3%] w-4 h-4 text-[#F59E0B]/12 rotate-45" />
-          <Star className="absolute bottom-[15%] right-[5%] w-3 h-3 text-[#EC4899]/10 -rotate-6" />
-          <Heart className="absolute top-4 left-[15%] w-3 h-3 text-[#60A5FA]/10 rotate-12" />
-        </div>
-        <div className="max-w-[760px] mx-auto px-5 relative z-10">
-          <div className="flex flex-col sm:flex-row gap-8 sm:gap-6 items-stretch">
-            {/* Left column — text content (55%) */}
-            <div className="sm:w-[55%] flex flex-col justify-center">
-              <p className="text-[20px] sm:text-[24px] text-[#7EACC4] mb-2 font-semibold">
+      {/* Hero Section */}
+      <section className="bg-[#0B1120] border-b border-[#1E2D45]">
+        <div className="max-w-[760px] mx-auto px-5 py-14 sm:py-20">
+          <div className="flex flex-col sm:flex-row gap-10 sm:gap-12 items-center">
+
+            {/* Left — text */}
+            <div className="sm:w-[54%] flex flex-col">
+              <h1 className="text-white mb-5 leading-tight">
                 Can you afford to go back?
+              </h1>
+              <p className="text-[#94A3B8] text-[16px] leading-relaxed mb-8" style={{maxWidth: '38ch'}}>
+                See what you'd actually keep after tax and childcare in Dublin. 2025 Irish tax, NCS subsidies, and ECCE included.
               </p>
-              <p className="text-[#9CA3AF] mb-6">
-                See what you'd actually keep after tax and childcare in Dublin. Accurate 2025 Irish tax, NCS subsidies, and ECCE included.
-              </p>
-              <div className="flex flex-wrap gap-3 mb-8">
-                <a 
+              <div className="flex flex-wrap gap-3 mb-10">
+                <a
                   href="#calculator"
-                  className="inline-flex items-center px-5 py-2.5 bg-white text-[#111827] rounded-lg hover:bg-[#F3F4F6] transition-colors text-sm font-semibold"
+                  className="inline-flex items-center px-6 py-3 bg-[#2563EB] text-white rounded-lg hover:bg-[#1D4ED8] transition-colors text-sm font-semibold"
                 >
                   Start Calculator
                 </a>
-                <button 
+                <button
                   type="button"
                   onClick={() => setShowMaternityModal(true)}
-                  className="inline-flex items-center gap-2 px-5 py-2.5 bg-white/10 text-white border border-white/20 rounded-lg hover:bg-white/15 transition-colors text-sm"
+                  className="inline-flex items-center gap-2 px-5 py-3 text-[#94A3B8] border border-[#2A3F5C] rounded-lg hover:border-[#3B5275] hover:text-white transition-colors text-sm"
                 >
                   <Info className="w-4 h-4" />
                   How maternity leave works
                 </button>
               </div>
 
-              {/* Compact stats row */}
-              <div className="grid grid-cols-3 gap-3">
-                <div className="p-4 bg-white/5 border border-white/10 rounded-xl text-center">
-                  <div className="text-[20px] sm:text-[24px] font-semibold text-white">40-70%</div>
-                  <p className="text-xs text-[#9CA3AF] mt-1">of take-home consumed by childcare</p>
+              {/* Stats — inline, clean */}
+              <div className="flex items-stretch divide-x divide-[#1E2D45]">
+                <div className="pr-6">
+                  <div className="text-[22px] font-bold text-white tabular-nums">40–70%</div>
+                  <p className="text-xs text-[#4B6080] mt-0.5">of take-home lost to childcare</p>
                 </div>
-                <div className="p-4 bg-white/5 border border-white/10 rounded-xl text-center">
-                  <div className="text-[20px] sm:text-[24px] font-semibold text-white">2-3 yrs</div>
-                  <p className="text-xs text-[#9CA3AF] mt-1">typical crèche waiting list</p>
+                <div className="px-6">
+                  <div className="text-[22px] font-bold text-white tabular-nums">2–3 yrs</div>
+                  <p className="text-xs text-[#4B6080] mt-0.5">typical crèche waiting list</p>
                 </div>
-                <div className="p-4 bg-white/5 border border-white/10 rounded-xl text-center">
-                  <div className="text-[20px] sm:text-[24px] font-semibold text-white">Free</div>
-                  <p className="text-xs text-[#9CA3AF] mt-1">no login, no fees, forever</p>
+                <div className="pl-6">
+                  <div className="text-[22px] font-bold text-white tabular-nums">Free</div>
+                  <p className="text-xs text-[#4B6080] mt-0.5">no login, no fees, ever</p>
                 </div>
               </div>
             </div>
 
-            {/* Right column — hero image (45%) */}
-            <div className="sm:w-[45%] min-h-[240px] sm:min-h-0">
+            {/* Right — photo */}
+            <div className="sm:w-[46%] w-full">
               <div
                 id="hero-photo"
-                className="w-full h-full min-h-[240px] sm:min-h-[360px] bg-[#1A3348] rounded-xl shadow-lg shadow-black/20 overflow-hidden"
+                className="w-full h-[260px] sm:h-[360px] bg-[#1E2D45] rounded-xl overflow-hidden"
               >
                 <img src={heroImage} alt="Parents reviewing childcare costs at kitchen table" className="w-full h-full object-cover" />
               </div>
             </div>
+
           </div>
         </div>
       </section>
@@ -758,7 +751,7 @@ Thank you,
                     placeholder="45"
                   />
                   {hoursPerWeek > 45 && (
-                    <p className="mt-1 text-xs text-[#F59E0B]">NCS max: 45hrs</p>
+                    <p className="mt-1 text-xs text-[#2563EB] font-medium">NCS max: 45hrs</p>
                   )}
                 </div>
 
@@ -787,25 +780,26 @@ Thank you,
             </div>
 
             {/* Results Card */}
-            <div className="bg-gradient-to-br from-white to-[#F9FAFB] border-2 border-[#E5E7EB] rounded-xl overflow-hidden shadow-lg">
-              <div className="h-1.5" style={{ backgroundColor: retentionColor }} />
-              
+            <div className="bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04)' }}>
               <div className="p-5 sm:p-6">
-                {/* Summary Metric Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 mb-3">
-                  <div className="bg-[#F5F5F5] rounded-lg p-4 flex sm:block items-center justify-between">
-                    <div className="text-xs text-[#6B6B6B] sm:mb-1.5">Net monthly (after tax)</div>
-                    <div className="text-[22px] font-medium text-[#1A1A1A] tabular-nums">€{taxResult.netMonthly.toLocaleString()}</div>
+                {/* Summary Metrics — clean inline row */}
+                <div className="grid grid-cols-3 divide-x divide-[#E2E8F0] mb-5">
+                  <div className="pr-5">
+                    <div className="text-[11px] font-medium text-[#94A3B8] uppercase tracking-wider mb-1">Net monthly</div>
+                    <div className="text-[26px] font-bold text-[#0F172A] tabular-nums leading-none">€{taxResult.netMonthly.toLocaleString()}</div>
+                    <div className="text-xs text-[#94A3B8] mt-1">after tax</div>
                   </div>
-                  <div className="bg-[#F5F5F5] rounded-lg p-4 flex sm:block items-center justify-between">
-                    <div className="text-xs text-[#6B6B6B] sm:mb-1.5">
-                      {childcareType === 'nanny' ? 'Nanny cost' : childcareType === 'unregistered' ? 'Childminder cost' : 'Childcare cost'}
+                  <div className="px-5">
+                    <div className="text-[11px] font-medium text-[#94A3B8] uppercase tracking-wider mb-1">
+                      {childcareType === 'nanny' ? 'Nanny cost' : childcareType === 'unregistered' ? 'Childminder' : 'Childcare cost'}
                     </div>
-                    <div className="text-[22px] font-medium text-[#BA7517] tabular-nums">€{outOfPocketMonthly.toLocaleString()}</div>
+                    <div className="text-[26px] font-bold text-[#B05555] tabular-nums leading-none">€{outOfPocketMonthly.toLocaleString()}</div>
+                    <div className="text-xs text-[#94A3B8] mt-1">per month</div>
                   </div>
-                  <div className="bg-[#F5F5F5] rounded-lg p-4 flex sm:block items-center justify-between">
-                    <div className="text-xs text-[#6B6B6B] sm:mb-1.5">Left after childcare</div>
-                    <div className="text-[22px] font-medium text-[#A32D2D] tabular-nums">€{amountLeft.toLocaleString()}</div>
+                  <div className="pl-5">
+                    <div className="text-[11px] font-medium text-[#94A3B8] uppercase tracking-wider mb-1">You keep</div>
+                    <div className="text-[26px] font-bold tabular-nums leading-none" style={{ color: retentionColor }}>€{amountLeft.toLocaleString()}</div>
+                    <div className="text-xs text-[#94A3B8] mt-1">after childcare</div>
                   </div>
                 </div>
 
@@ -826,13 +820,13 @@ Thank you,
                   
                   <div className="flex h-7 rounded-md overflow-hidden mb-2">
                     <div
-                      className="bg-[#E24B4A] flex items-center justify-center text-white text-[11px] font-medium"
+                      className="bg-[#C07878] flex items-center justify-center text-white text-[11px] font-medium"
                       style={{ width: `${Math.round((outOfPocketMonthly / displayNetMonthly) * 100)}%` }}
                     >
                       {Math.round((outOfPocketMonthly / displayNetMonthly) * 100) > 15 && `${childcareType === 'nanny' ? 'Nanny' : 'Childcare'} ${Math.round((outOfPocketMonthly / displayNetMonthly) * 100)}%`}
                     </div>
                     <div
-                      className="bg-[#639922] flex items-center justify-center text-white text-[11px] font-medium"
+                      className="bg-[#5A8A5A] flex items-center justify-center text-white text-[11px] font-medium"
                       style={{ width: `${Math.round((amountLeft / displayNetMonthly) * 100)}%` }}
                     >
                       {Math.round((amountLeft / displayNetMonthly) * 100) > 15 && `Yours ${Math.round((amountLeft / displayNetMonthly) * 100)}%`}
@@ -927,7 +921,7 @@ Thank you,
                 {metr !== null && (
                   <div className={`rounded-xl border p-5 mb-3 ${
                     metr >= 60 ? 'bg-[#FEF2F2] border-[#FEE2E2]' :
-                    metr >= 45 ? 'bg-[#FFFBEB] border-[#FDE68A]' :
+                    metr >= 45 ? 'bg-[#EFF6FF] border-[#BFDBFE]' :
                                  'bg-[#F0FDF4] border-[#BBF7D0]'
                   }`}>
                     <div className="flex items-start justify-between gap-4">
@@ -936,7 +930,7 @@ Thank you,
                           Marginal Effective Tax Rate
                         </div>
                         <div className={`text-[28px] font-semibold tabular-nums leading-none mb-2 ${
-                          metr >= 60 ? 'text-[#A32D2D]' : metr >= 45 ? 'text-[#B45309]' : 'text-[#2A6041]'
+                          metr >= 60 ? 'text-[#A32D2D]' : metr >= 45 ? 'text-[#1D4ED8]' : 'text-[#2A6041]'
                         }`}>
                           {metr}%
                         </div>
@@ -1189,8 +1183,8 @@ Thank you,
                   })}
                 </div>
 
-                <div className="mt-4 p-3 bg-[#FEF3C7] border border-[#FCD34D] rounded-lg">
-                  <p className="text-xs text-[#92400E]">
+                <div className="mt-4 p-3 bg-[#EFF6FF] border border-[#BFDBFE] rounded-lg">
+                  <p className="text-xs text-[#1E3A8A]">
                     <strong>Note:</strong> This doesn't factor in pension contributions, career progression, or the compounding cost of career gaps. Even a financially "worse" scenario may be better long-term.
                   </p>
                 </div>
@@ -1249,12 +1243,6 @@ Thank you,
                 wait: 'Employer-dependent',
               },
               {
-                title: 'Parent & toddler groups',
-                description: 'Not a childcare solution, but reduces isolation and helps build a local network. Community centre sessions from €2, dedicated paid classes up to €20+ per session.',
-                cost: '€2-20+/session',
-                wait: 'Immediate',
-              },
-              {
                 title: 'Nanny share',
                 description: 'Split a nanny with another family. A full-time nanny costs approx. €2,240/mo (€14.15/hr minimum wage), split between two families. Find partners through local parent groups.',
                 cost: '~€1,200/mo per family',
@@ -1277,12 +1265,12 @@ Thank you,
           </div>
 
           {/* Off the books callout */}
-          <div className="mt-5 p-4 bg-[#FFFBEB] border border-[#FDE68A] rounded-xl">
+          <div className="mt-5 p-4 bg-[#EFF6FF] border border-[#BFDBFE] rounded-xl">
             <div className="flex items-start gap-3">
-              <AlertCircle className="w-5 h-5 text-[#D97706] flex-shrink-0 mt-0.5" />
+              <AlertCircle className="w-5 h-5 text-[#2563EB] flex-shrink-0 mt-0.5" />
               <div>
-                <h4 className="text-sm font-semibold text-[#92400E] mb-1">The elephant in the room</h4>
-                <p className="text-xs text-[#78716C] leading-relaxed">
+                <h4 className="text-sm font-semibold text-[#1E3A8A] mb-1">The elephant in the room</h4>
+                <p className="text-xs text-[#374151] leading-relaxed">
                   At €14.15/hr minimum wage, a full-time nanny costs over €2,400/mo before employer PRSI. A childminder charging legal rates is often out of reach. The result: many families are quietly pushed towards informal, cash-in-hand arrangements. This is not a parenting failure. It is a policy failure. When compliance is unaffordable, the system itself creates the shadow economy it claims to regulate.
                 </p>
               </div>
@@ -1539,11 +1527,11 @@ Thank you,
             </div>
 
             {/* Tip box */}
-            <div className="bg-[#FEF3C7] rounded-xl border border-[#FDE68A] p-5 flex gap-3">
+            <div className="bg-[#EFF6FF] rounded-xl border border-[#BFDBFE] p-5 flex gap-3">
               <div className="text-lg flex-shrink-0">💡</div>
               <div>
-                <p className="text-sm font-semibold text-[#92400E] mb-1">Waiting lists in Dublin average 18–24 months</p>
-                <p className="text-sm text-[#92400E]">
+                <p className="text-sm font-semibold text-[#1E3A8A] mb-1">Waiting lists in Dublin average 18–24 months</p>
+                <p className="text-sm text-[#1E40AF]">
                   Register with 3–5 crèches as early as possible — even before or during pregnancy. Most crèches allow you to join multiple waiting lists at no cost.
                 </p>
               </div>
@@ -1589,8 +1577,8 @@ Thank you,
             {/* Childcare Services */}
             <div className="bg-white rounded-xl border border-[#E5E7EB] p-5">
               <h3 className="font-semibold text-[#111827] mb-4 flex items-center gap-2 text-sm">
-                <div className="w-7 h-7 bg-[#FEF3C7] rounded-lg flex items-center justify-center">
-                  <Mail className="w-3.5 h-3.5 text-[#F59E0B]" />
+                <div className="w-7 h-7 bg-[#DBEAFE] rounded-lg flex items-center justify-center">
+                  <Mail className="w-3.5 h-3.5 text-[#2563EB]" />
                 </div>
                 Childcare Services
               </h3>
@@ -1660,16 +1648,16 @@ Thank you,
       </section>
 
       {/* Manifesto */}
-      <section id="manifesto" className="bg-[#0D1F2D] border-b border-[#1A3348] relative overflow-hidden">
-        {/* Playful floating icons */}
+      <section id="manifesto" className="bg-[#0B1120] border-b border-[#1E2D45] relative overflow-hidden">
+        {/* Subtle floating icons */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden" aria-hidden="true">
-          <Baby className="absolute top-10 right-[10%] w-6 h-6 text-[#F59E0B]/10 rotate-6" />
+          <Baby className="absolute top-10 right-[10%] w-6 h-6 text-[#60A5FA]/10 rotate-6" />
           <Star className="absolute top-[25%] left-[5%] w-4 h-4 text-[#EC4899]/10 -rotate-12" />
           <Heart className="absolute bottom-[20%] right-[6%] w-4 h-4 text-[#60A5FA]/10 rotate-12" />
-          <BabyBottle className="absolute bottom-10 left-[8%] w-5 h-5 text-[#F59E0B]/10 rotate-45" />
+          <BabyBottle className="absolute bottom-10 left-[8%] w-5 h-5 text-[#60A5FA]/10 rotate-45" />
         </div>
         <div className="max-w-[760px] mx-auto px-5 py-10 sm:py-16 relative z-10">
-          <div className="bg-[#0D1F2D] rounded-2xl overflow-hidden">
+          <div className="bg-[#0B1120] rounded-2xl overflow-hidden">
             {/* Manifesto hero photo */}
             <div className="relative w-full" style={{ maxHeight: '420px' }}>
               <div
@@ -1678,14 +1666,14 @@ Thank you,
               >
                 <img src={manifestoImage} alt="Mother holding toddler outside a Dublin crèche gate" className="w-full h-full object-cover" />
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0D1F2D] via-[#0D1F2D]/30 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#0B1120] via-[#0B1120]/30 to-transparent pointer-events-none" />
             </div>
 
             <div className="p-6 sm:p-10 -mt-6 relative z-10">
             
             {/* Childhood quote */}
             <div className="mb-8 p-5 bg-white/5 border border-white/10 rounded-xl flex gap-4 items-start">
-              <span className="flex-shrink-0 mt-0.5 text-[#F59E0B]/60" aria-hidden="true">
+              <span className="flex-shrink-0 mt-0.5 text-[#60A5FA]/60" aria-hidden="true">
                 <BabyBottle className="w-5 h-5" />
               </span>
               <blockquote className="text-[#D1D5DB] italic">

@@ -20,6 +20,7 @@
       target: 'esnext',
       outDir: 'build',
     },
+    base: '/ReturnKit/',
     server: {
       port: 3001,
       open: true,
