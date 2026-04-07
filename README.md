@@ -1,8 +1,8 @@
-# ReturnKit
+# Take Home
 
 **The real cost of returning to work in Ireland.**
 
-ReturnKit is a free, open-source calculator that shows Irish parents exactly how much of their salary they will keep after tax and childcare costs — including NCS subsidies, ECCE free preschool hours, and the Marginal Effective Tax Rate that most tools never surface.
+**Take Home** is a free, open-source calculator that shows Irish parents exactly how much of their salary they will keep after tax and childcare costs — including NCS subsidies, ECCE free preschool hours, and the Marginal Effective Tax Rate that most tools never surface.
 
 No login. No ads. No data collected. Runs entirely in your browser.
 
@@ -10,7 +10,7 @@ No login. No ads. No data collected. Runs entirely in your browser.
 
 ## Why this exists
 
-Most "back to work" conversations stop at gross salary. ReturnKit answers the question that actually matters:
+Most "back to work" conversations stop at gross salary. Take Home answers the question that actually matters:
 
 > *"After I pay tax, PRSI, USC, and childcare — what comes home?"*
 
