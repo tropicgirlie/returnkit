@@ -488,7 +488,7 @@ Thank you,
             {/* Left — text */}
             <div className="sm:w-[54%] flex flex-col">
               <h1 className="text-white mb-5 leading-tight">
-                Can you afford to go back?
+                The real cost of returning to work
               </h1>
               <p className="text-[#94A3B8] text-[16px] leading-relaxed mb-8" style={{maxWidth: '38ch'}}>
                 See what you'd actually keep after tax and childcare in Dublin. 2025 Irish tax, NCS subsidies, and ECCE included.
