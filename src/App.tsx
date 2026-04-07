@@ -437,7 +437,7 @@ Thank you,
       <header className="sticky top-0 z-50 bg-white border-b border-[#E2E8F0]">
         <div className="max-w-[760px] mx-auto px-5 h-14 flex items-center justify-between">
           <a href="#" className="flex items-center">
-            <TransparentLogo src={logoImage} alt="ReturnKit" className="h-[95px]" />
+            <TransparentLogo src={logoImage} alt="Take Home" className="h-10 w-auto" />
           </a>
 
           {/* Desktop Nav */}
