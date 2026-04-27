@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import { CheckCircle2, Database, TrendingUp, Users } from 'lucide-react';
+import { CheckCircle2, Database, TrendingUp, Users, Shield } from 'lucide-react';
 import { projectId, publicAnonKey } from '../utils/supabase/info';
 
 interface ResearchContributionProps {
-  // Data from calculator
   grossSalary: number;
   monthlyCost: number;
   childcareType: string;
@@ -11,23 +10,22 @@ interface ResearchContributionProps {
   region?: string;
 }
 
-// Helper functions to convert exact values to anonymized bands
 function salaryToBand(salary: number): string {
   if (salary < 30000) return 'Under €30k';
-  if (salary < 40000) return '€30k-€40k';
-  if (salary < 50000) return '€40k-€50k';
-  if (salary < 60000) return '€50k-€60k';
-  if (salary < 70000) return '€60k-€70k';
-  if (salary < 85000) return '€70k-€85k';
+  if (salary < 40000) return '€30k–€40k';
+  if (salary < 50000) return '€40k–€50k';
+  if (salary < 60000) return '€50k–€60k';
+  if (salary < 70000) return '€60k–€70k';
+  if (salary < 85000) return '€70k–€85k';
   return '€85k+';
 }
 
 function childcareCostToBand(cost: number): string {
   if (cost < 600) return 'Under €600';
-  if (cost < 800) return '€600-€800';
-  if (cost < 1000) return '€800-€1,000';
-  if (cost < 1200) return '€1,000-€1,200';
-  if (cost < 1400) return '€1,200-€1,400';
+  if (cost < 800) return '€600–€800';
+  if (cost < 1000) return '€800–€1,000';
+  if (cost < 1200) return '€1,000–€1,200';
+  if (cost < 1400) return '€1,200–€1,400';
   return '€1,400+';
 }
 
@@ -39,6 +37,7 @@ export function ResearchContribution({
   region = 'Dublin'
 }: ResearchContributionProps) {
   const [step, setStep] = useState<'consent' | 'form' | 'submitted' | 'hidden'>('consent');
+  const [consentChecked, setConsentChecked] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState('');
 
@@ -49,6 +48,7 @@ export function ResearchContribution({
   const [workArrangement, setWorkArrangement] = useState('');
 
   const handleConsent = () => {
+    if (!consentChecked) return;
     setStep('form');
   };
 
@@ -113,32 +113,74 @@ export function ResearchContribution({
             <Database className="w-6 h-6 text-[#7EACC4]" />
           </div>
           <div className="flex-1">
-            <h3 className="text-xl font-bold text-[#0D1F2D] mb-2">
+            <h3 className="text-xl font-bold text-[#0D1F2D] mb-1">
               Help improve maternal workforce research
             </h3>
-            <p className="text-[#374151] mb-4 leading-relaxed">
-              Your anonymized responses will be stored and used for aggregated research insights by MomOps to help policymakers and journalists understand the childcare crisis.
+            <p className="text-sm text-[#6B7280] mb-4">
+              Takes 60 seconds. Your data stays completely anonymous — by design, not by policy.
             </p>
-            
+
+            {/* What we collect */}
             <div className="bg-[#F9FAFB] rounded-lg p-4 mb-4 text-sm">
-              <p className="font-semibold text-[#0D1F2D] mb-2">What we collect:</p>
-              <ul className="space-y-1 text-[#6B7280]">
-                <li>• Salary band (not exact amount)</li>
-                <li>• Childcare cost band (not exact amount)</li>
-                <li>• Industry sector</li>
-                <li>• Work arrangement (remote, hybrid, office)</li>
-                <li>• Return-to-work status</li>
-                <li>• Region (Dublin area)</li>
-              </ul>
-              <p className="mt-3 text-[#6B7280] italic">
-                No names, emails, or identifiable information is collected.
+              <div className="flex items-center gap-2 mb-2">
+                <Shield className="w-4 h-4 text-[#059669]" />
+                <p className="font-semibold text-[#0D1F2D]">What is collected — and what isn't</p>
+              </div>
+              <div className="grid sm:grid-cols-2 gap-3">
+                <div>
+                  <p className="text-xs font-semibold text-[#374151] uppercase tracking-wide mb-1">Collected (anonymised bands)</p>
+                  <ul className="space-y-0.5 text-[#6B7280]">
+                    <li>• Salary band (e.g. €50k–€60k)</li>
+                    <li>• Childcare cost band</li>
+                    <li>• Industry sector</li>
+                    <li>• Work arrangement</li>
+                    <li>• Return-to-work status</li>
+                    <li>• Region (Dublin area)</li>
+                  </ul>
+                </div>
+                <div>
+                  <p className="text-xs font-semibold text-[#374151] uppercase tracking-wide mb-1">Never collected</p>
+                  <ul className="space-y-0.5 text-[#6B7280]">
+                    <li>• Name or email</li>
+                    <li>• Exact salary or cost figures</li>
+                    <li>• IP address or device ID</li>
+                    <li>• Any identifier that could link a response back to you</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Legal consent notice */}
+            <div className="bg-[#EFF6FF] border border-[#BFDBFE] rounded-lg p-4 mb-5 text-sm text-[#1E40AF]">
+              <p className="font-semibold mb-1">Data use & your rights (GDPR Article 6(1)(a))</p>
+              <p className="text-[#3B82F6] leading-relaxed">
+                Your anonymised responses will be stored and used by{' '}
+                <a href="https://momops.org" target="_blank" rel="noopener noreferrer" className="underline font-medium">MomOps</a>{' '}
+                for aggregated research to help policymakers and journalists understand Ireland's childcare crisis.
+              </p>
+              <p className="mt-2 text-[#3B82F6]">
+                Because no identifiers are stored, responses <strong>cannot be linked back to any individual</strong> and therefore fall outside the scope of personal data under GDPR Recital 26. Once submitted, the data cannot be deleted on request, as there is nothing to identify your specific response.
               </p>
             </div>
+
+            {/* Explicit consent checkbox — required by GDPR Article 7 */}
+            <label className="flex items-start gap-3 cursor-pointer mb-5 group">
+              <input
+                type="checkbox"
+                checked={consentChecked}
+                onChange={(e) => setConsentChecked(e.target.checked)}
+                className="mt-0.5 w-5 h-5 rounded border-2 border-[#D1D5DB] text-[#0D1F2D] focus:ring-[#7EACC4] cursor-pointer flex-shrink-0"
+              />
+              <span className="text-sm text-[#374151] leading-relaxed group-hover:text-[#0D1F2D] transition-colors">
+                I understand that my anonymised data will be used for research and policy advocacy by MomOps. I accept that because no personal identifiers are collected, this submission is permanent and cannot be withdrawn.
+              </span>
+            </label>
 
             <div className="flex gap-3">
               <button
                 onClick={handleConsent}
-                className="flex-1 bg-[#0D1F2D] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#1a3a4d] transition-colors"
+                disabled={!consentChecked}
+                className="flex-1 bg-[#0D1F2D] text-white px-6 py-3 rounded-lg font-semibold hover:bg-[#1a3a4d] transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
               >
                 Contribute Anonymously
               </button>
@@ -146,7 +188,7 @@ export function ResearchContribution({
                 onClick={handleSkip}
                 className="px-6 py-3 rounded-lg font-semibold text-[#6B7280] hover:bg-[#F3F4F6] transition-colors"
               >
-                Skip
+                No thanks
               </button>
             </div>
           </div>
@@ -167,7 +209,7 @@ export function ResearchContribution({
               Quick research questions
             </h3>
             <p className="text-sm text-[#6B7280]">
-              Just a few more details to help us understand the full picture
+              A few more details to help build the full picture
             </p>
           </div>
         </div>
@@ -200,13 +242,15 @@ export function ResearchContribution({
           {/* Maternity Leave */}
           <div>
             <label className="block text-sm font-semibold text-[#0D1F2D] mb-2">
-              Maternity leave taken (weeks)
+              Maternity leave taken (weeks) <span className="text-[#9CA3AF] font-normal">optional</span>
             </label>
             <input
               type="number"
               value={maternityLeaveWeeks}
               onChange={(e) => setMaternityLeaveWeeks(e.target.value)}
-              placeholder="e.g., 26"
+              placeholder="e.g. 26"
+              min={1}
+              max={104}
               className="w-full px-4 py-3 rounded-lg border-2 border-[#E5E7EB] focus:border-[#7EACC4] focus:outline-none"
             />
           </div>
@@ -223,7 +267,7 @@ export function ResearchContribution({
                 { value: 'Returned to work but in another company', label: 'Returned to work but in another company' },
                 { value: 'Planning to return', label: 'Planning to return' },
                 { value: 'Extended leave', label: 'Extended leave' },
-                { value: 'Did not return', label: 'Did not return' }
+                { value: 'Did not return', label: 'Did not return' },
               ].map(({ value, label }) => (
                 <label key={value} className="flex items-center gap-2 cursor-pointer">
                   <input
@@ -249,7 +293,7 @@ export function ResearchContribution({
               {[
                 { value: 'Remote', label: 'Remote' },
                 { value: 'Hybrid', label: 'Hybrid' },
-                { value: 'Office-based', label: 'Office-based' }
+                { value: 'Office-based', label: 'Office-based' },
               ].map(({ value, label }) => (
                 <label key={value} className="flex items-center gap-2 cursor-pointer">
                   <input
@@ -302,10 +346,14 @@ export function ResearchContribution({
           </div>
           <div className="flex-1">
             <h3 className="text-xl font-bold text-[#0D1F2D] mb-2">
-              Thank you for contributing to the research
+              Thank you for contributing
             </h3>
             <p className="text-[#374151] mb-4 leading-relaxed">
-              Your anonymized data will help <a href="https://momops.org" target="_blank" rel="noopener noreferrer" className="text-[#2563EB] hover:underline font-medium">MomOps</a> build evidence for policy change and support mothers navigating the return-to-work decision.
+              Your anonymised data will help{' '}
+              <a href="https://momops.org" target="_blank" rel="noopener noreferrer" className="text-[#2563EB] hover:underline font-medium">
+                MomOps
+              </a>{' '}
+              build evidence for policy change and support mothers navigating the return-to-work decision.
             </p>
             <div className="flex items-center gap-2 text-sm text-[#6B7280]">
               <TrendingUp className="w-4 h-4" />
