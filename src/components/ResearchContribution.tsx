@@ -66,12 +66,14 @@ export function ResearchContribution({
 
     try {
       const response = await fetch(
-        `https://${projectId}.supabase.co/functions/v1/make-server-0c75c66f/research-contribution`,
+        `https://${projectId}.supabase.co/rest/v1/research_contributions`,
         {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${publicAnonKey}`
+            'apikey': publicAnonKey,
+            'Authorization': `Bearer ${publicAnonKey}`,
+            'Prefer': 'return=minimal'
           },
           body: JSON.stringify({
             region,
