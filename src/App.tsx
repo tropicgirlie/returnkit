@@ -5,6 +5,7 @@ import { loadCreches, saveCreches } from './components/CrecheMap';
 import { AdminPanel, type CrecheEntry } from './components/AdminPanel';
 import { MaternityExplainerModal } from './components/MaternityExplainerModal';
 import { ResearchContribution } from './components/ResearchContribution';
+import { DataPartnersModal } from './components/DataPartnersModal';
 import heroImage from 'figma:asset/4245d1eebb3ccdc1cc917aafeef7ba6e41981f4e.png';
 import manifestoImage from 'figma:asset/0295926140d4bd7df6ef13dd691844127b299fbf.png';
 import logoImage from 'figma:asset/b79a2440b820226820205d8f1d771dd38cb5472f.png';
@@ -53,6 +54,7 @@ export default function App() {
   // Crèche state (lifted up so footer admin can access)
   const [creches, setCreches] = useState<CrecheEntry[]>(loadCreches);
   const [showAdmin, setShowAdmin] = useState(false);
+  const [showDataPartners, setShowDataPartners] = useState(false);
 
   useEffect(() => {
     saveCreches(creches);
@@ -1794,7 +1796,7 @@ Thank you,
             {/* Trust signals */}
             <div className="flex flex-wrap gap-3">
               {[
-                { icon: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z", label: "No data collected" },
+                { icon: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z", label: "No personal data stored" },
                 { icon: "M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636", label: "No cookies" },
                 { icon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4", label: "Open source" },
               ].map(({ icon, label }) => (
@@ -1807,20 +1809,29 @@ Thank you,
               ))}
             </div>
 
-            {/* MomOps attribution + Admin */}
+            {/* MomOps attribution + Admin + Research */}
             <div className="pt-5 border-t border-[#E5E7EB] flex items-center justify-between flex-wrap gap-3">
-              <p className="text-xs text-[#9CA3AF]">
-                Inspired by the{" "}
-                <a
-                  href="https://momops.org"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-[#6B7280] underline underline-offset-2 hover:text-[#374151] transition-colors"
+              <div className="flex items-center gap-4 flex-wrap">
+                <p className="text-xs text-[#9CA3AF]">
+                  Inspired by the{" "}
+                  <a
+                    href="https://momops.org"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-[#6B7280] underline underline-offset-2 hover:text-[#374151] transition-colors"
+                  >
+                    MomOps.org
+                  </a>{" "}
+                  framework
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setShowDataPartners(true)}
+                  className="text-xs text-[#9CA3AF] hover:text-[#6B7280] transition-colors underline underline-offset-2"
                 >
-                  MomOps.org
-                </a>{" "}
-                framework
-              </p>
+                  Research partnerships
+                </button>
+              </div>
               <button
                 type="button"
                 onClick={() => setShowAdmin(true)}
@@ -1834,6 +1845,11 @@ Thank you,
           </div>
         </div>
       </footer>
+
+      {/* Data Partners Modal */}
+      {showDataPartners && (
+        <DataPartnersModal onClose={() => setShowDataPartners(false)} />
+      )}
 
       {/* Admin Panel Modal */}
       {showAdmin && (
