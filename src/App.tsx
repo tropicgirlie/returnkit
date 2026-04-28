@@ -426,7 +426,7 @@ Thank you,
   ];
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA]">
+    <div className="min-h-screen bg-[#F9F7F4]">
       {/* Skip Links */}
       <a
         href="#main-content"
@@ -436,17 +436,17 @@ Thank you,
       </a>
       
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-white border-b border-[#E2E8F0]">
+      <header className="sticky top-0 z-50 bg-[#F9F7F4]/95 backdrop-blur-sm border-b border-[#E2DDD7]">
         <div className="max-w-[760px] mx-auto px-5 h-14 flex items-center justify-between">
-          <a href="#" className="flex items-center gap-2">
-            <TransparentLogo src={logoImage} alt="Take Home" className="h-10 w-auto" />
-            <span className="text-lg font-semibold text-[#0F172A]">Take Home</span>
+          <a href="#" className="flex items-center gap-2.5">
+            <TransparentLogo src={logoImage} alt="ReturnKit" className="h-9 w-auto" />
+            <span className="text-[15px] font-bold text-[#0D1F2D] tracking-tight">ReturnKit</span>
           </a>
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center gap-6">
             {navLinks.map((link) => (
-              <a key={link.href} href={link.href} className="text-sm text-[#64748B] hover:text-[#0F172A] transition-colors">
+              <a key={link.href} href={link.href} className="text-sm text-[#6B6560] hover:text-[#0D1F2D] transition-colors font-medium">
                 {link.label}
               </a>
             ))}
@@ -484,59 +484,63 @@ Thank you,
 
       <main id="main-content">
       {/* Hero Section */}
-      <section className="bg-[#0B1120] border-b border-[#1E2D45]">
-        <div className="max-w-[760px] mx-auto px-5 py-14 sm:py-20">
-          <div className="flex flex-col sm:flex-row gap-10 sm:gap-12 items-center">
+      <section className="bg-[#0D1F2D] border-b border-[#1a3248]">
+        <div className="max-w-[760px] mx-auto px-5 pt-14 sm:pt-20 pb-0">
+          <div className="flex flex-col sm:flex-row gap-10 sm:gap-14 items-end">
 
             {/* Left — text */}
-            <div className="sm:w-[54%] flex flex-col">
-              <h1 className="text-white mb-5 leading-tight">
+            <div className="sm:w-[56%] flex flex-col pb-14 sm:pb-20">
+              <div className="inline-flex items-center gap-2 mb-6">
+                <span className="w-2 h-2 rounded-full bg-[#B85A82]"></span>
+                <span className="text-xs font-semibold text-[#B85A82] uppercase tracking-widest">Ireland 2025</span>
+              </div>
+              <h1 className="text-white mb-5">
                 The real cost of returning to work
               </h1>
-              <p className="text-[#94A3B8] text-[16px] leading-relaxed mb-8" style={{maxWidth: '38ch'}}>
-                See what you'd actually keep after tax and childcare in Dublin. 2025 Irish tax, NCS subsidies, and ECCE included.
+              <p className="text-[#8FA8C0] text-[15px] leading-relaxed mb-8" style={{maxWidth: '36ch'}}>
+                See exactly what you keep after tax and childcare. Irish NCS subsidies, ECCE, and METR — all calculated instantly.
               </p>
-              <div className="flex flex-wrap gap-3 mb-10">
+              <div className="flex flex-wrap gap-3 mb-12">
                 <a
                   href="#calculator"
-                  className="inline-flex items-center px-6 py-3 bg-[#2563EB] text-white rounded-lg hover:bg-[#1D4ED8] transition-colors text-sm font-semibold"
+                  className="inline-flex items-center px-6 py-3 bg-[#B85A82] text-white rounded-lg hover:bg-[#A04E72] transition-colors text-sm font-semibold"
                 >
-                  Start Calculator
+                  Open Calculator
                 </a>
                 <button
                   type="button"
                   onClick={() => setShowMaternityModal(true)}
-                  className="inline-flex items-center gap-2 px-5 py-3 text-[#94A3B8] border border-[#2A3F5C] rounded-lg hover:border-[#3B5275] hover:text-white transition-colors text-sm"
+                  className="inline-flex items-center gap-2 px-5 py-3 text-[#8FA8C0] border border-[#243d56] rounded-lg hover:border-[#B85A82] hover:text-white transition-colors text-sm"
                 >
                   <Info className="w-4 h-4" />
                   How maternity leave works
                 </button>
               </div>
 
-              {/* Stats — inline, clean */}
-              <div className="flex items-stretch divide-x divide-[#1E2D45]">
+              {/* Stats */}
+              <div className="flex items-stretch divide-x divide-[#1a3248]">
                 <div className="pr-6">
-                  <div className="text-[22px] font-bold text-white tabular-nums">40–70%</div>
-                  <p className="text-xs text-[#4B6080] mt-0.5">of take-home lost to childcare</p>
+                  <div className="text-[26px] font-bold text-white tabular-nums" style={{fontFamily: "'DM Serif Display', Georgia, serif"}}>40–70%</div>
+                  <p className="text-xs text-[#4B6888] mt-1">of take-home lost to childcare</p>
                 </div>
                 <div className="px-6">
-                  <div className="text-[22px] font-bold text-white tabular-nums">2–3 yrs</div>
-                  <p className="text-xs text-[#4B6080] mt-0.5">typical crèche waiting list</p>
+                  <div className="text-[26px] font-bold text-white tabular-nums" style={{fontFamily: "'DM Serif Display', Georgia, serif"}}>2–3 yrs</div>
+                  <p className="text-xs text-[#4B6888] mt-1">typical crèche waiting list</p>
                 </div>
                 <div className="pl-6">
-                  <div className="text-[22px] font-bold text-white tabular-nums">Free</div>
-                  <p className="text-xs text-[#4B6080] mt-0.5">no login, no fees, ever</p>
+                  <div className="text-[26px] font-bold text-white tabular-nums" style={{fontFamily: "'DM Serif Display', Georgia, serif"}}>Free</div>
+                  <p className="text-xs text-[#4B6888] mt-1">no login, no data sold</p>
                 </div>
               </div>
             </div>
 
-            {/* Right — photo */}
-            <div className="sm:w-[46%] w-full">
+            {/* Right — photo, flush to bottom */}
+            <div className="sm:w-[44%] w-full">
               <div
                 id="hero-photo"
-                className="w-full h-[260px] sm:h-[360px] bg-[#1E2D45] rounded-xl overflow-hidden"
+                className="w-full h-[240px] sm:h-[380px] rounded-t-xl overflow-hidden"
               >
-                <img src={heroImage} alt="Parents reviewing childcare costs at kitchen table" className="w-full h-full object-cover" />
+                <img src={heroImage} alt="Parents reviewing childcare costs at kitchen table" className="w-full h-full object-cover object-top" />
               </div>
             </div>
 
@@ -545,12 +549,17 @@ Thank you,
       </section>
 
       {/* Calculator */}
-      <section id="calculator" className="bg-white border-b border-[#E5E7EB]">
+      <section id="calculator" className="bg-[#F9F7F4] border-b border-[#E2DDD7]">
         <div className="max-w-[760px] mx-auto px-5 py-10 sm:py-16">
 
-          <div className="space-y-6">
+          <div className="flex items-center gap-3 mb-7">
+            <span className="w-1 h-6 rounded-full bg-[#B85A82]"></span>
+            <h2 className="text-[#0D1F2D]">Your numbers</h2>
+          </div>
+
+          <div className="space-y-4">
             {/* Income Card */}
-            <div className="p-5 sm:p-6 bg-white border border-[#E5E7EB] rounded-xl shadow-sm">
+            <div className="p-5 sm:p-6 bg-white border border-[#E2DDD7] rounded-2xl shadow-sm">
               <div className="flex items-center justify-between mb-4">
                 <h3 className="font-semibold text-[#111827]">Your Income</h3>
                 <button
@@ -667,7 +676,7 @@ Thank you,
             </div>
 
             {/* Childcare Card */}
-            <div className="p-5 sm:p-6 bg-white border border-[#E5E7EB] rounded-xl shadow-sm">
+            <div className="p-5 sm:p-6 bg-white border border-[#E2DDD7] rounded-2xl shadow-sm">
               <h3 className="font-semibold text-[#111827] mb-4">Childcare Setup</h3>
               
               {/* Children & Age */}
@@ -1031,7 +1040,7 @@ Thank you,
                 {showBreakdown && (
                   <div className="p-4 bg-white rounded-lg border border-[#E5E7EB] text-sm space-y-2.5 mb-4">
                     <div className="flex justify-between items-baseline">
-                      <span className="text-[#6B7280]">Gross salary</span>
+                      <span className="text-[#6B6560]">Gross salary</span>
                       <span className="font-semibold text-[#111827] tabular-nums">€{taxResult.grossMonthly.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between text-xs items-baseline">
@@ -1047,7 +1056,7 @@ Thank you,
                       <span className="text-[#9CA3AF] tabular-nums">€{Math.round(taxResult.prsi / 12).toLocaleString()}</span>
                     </div>
                     <div className="pt-2 border-t border-[#E5E7EB] flex justify-between items-baseline">
-                      <span className="text-[#6B7280]">Net salary</span>
+                      <span className="text-[#6B6560]">Net salary</span>
                       <span className="font-semibold text-[#111827] tabular-nums">€{taxResult.netMonthly.toLocaleString()}</span>
                     </div>
                     {childcareType === 'registered' && subsidyAmount > 0 && (
@@ -1146,7 +1155,7 @@ Thank you,
 
             {/* Scenario Comparison */}
             {showScenarioComparison && (
-              <div className="p-5 sm:p-6 bg-white border border-[#E5E7EB] rounded-xl shadow-sm">
+              <div className="p-5 sm:p-6 bg-white border border-[#E2DDD7] rounded-2xl shadow-sm">
                 <h3 className="font-semibold text-[#111827] mb-1">Full-time vs Part-time vs Not Returning</h3>
                 <p className="text-xs text-[#6B7280] mb-5">Based on your current inputs. Part-time assumes 3 days/week (60%).</p>
                 
@@ -1212,10 +1221,13 @@ Thank you,
       </section>
 
       {/* What if you can't get a place */}
-      <section className="bg-[#F9FAFB] border-b border-[#E5E7EB]">
+      <section className="bg-[#F5F2EE] border-b border-[#E2DDD7]">
         <div className="max-w-[760px] mx-auto px-5 py-10 sm:py-16">
-          <h2 className="text-[24px] font-semibold text-[#111827] mb-2">What if you can't get a place?</h2>
-          <p className="text-[#6B7280] mb-6">
+          <div className="flex items-center gap-3 mb-2">
+            <span className="w-1 h-6 rounded-full bg-[#B85A82]"></span>
+            <h2 className="text-[#0D1F2D]">What if you can't get a place?</h2>
+          </div>
+          <p className="text-[#6B6560] mb-6 ml-4">
             Waiting lists are 2-3 years. Here are alternatives real Dublin parents actually use.
           </p>
           
@@ -1283,10 +1295,13 @@ Thank you,
       </section>
 
       {/* Actions */}
-      <section id="actions" className="bg-white border-b border-[#E5E7EB]">
+      <section id="actions" className="bg-white border-b border-[#E2DDD7]">
         <div className="max-w-[760px] mx-auto px-5 py-10 sm:py-16">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-            <h2 className="text-[24px] font-semibold text-[#111827]">What to Do Right Now</h2>
+            <div className="flex items-center gap-3">
+              <span className="w-1 h-6 rounded-full bg-[#B85A82]"></span>
+              <h2 className="text-[#0D1F2D]">What to Do Right Now</h2>
+            </div>
             <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#D1FAE5] text-[#059669] rounded-lg border border-[#059669]/20 self-start sm:self-auto">
               <CheckCircle2 className="w-4 h-4" />
               <span className="text-sm font-semibold">
@@ -1397,11 +1412,14 @@ Thank you,
       </section>
 
       {/* Email Scripts */}
-      <section id="emails" className="bg-[#F9FAFB] border-b border-[#E5E7EB]">
+      <section id="emails" className="bg-[#F5F2EE] border-b border-[#E2DDD7]">
         <div className="max-w-[760px] mx-auto px-5 py-10 sm:py-16">
           <div className="mb-8">
-            <h2 className="text-[24px] font-semibold text-[#111827] mb-2">Email Scripts</h2>
-            <p className="text-[#6B7280]">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="w-1 h-6 rounded-full bg-[#B85A82]"></span>
+              <h2 className="text-[#0D1F2D]">Email Scripts</h2>
+            </div>
+            <p className="text-[#6B6560] ml-4">
               Copy-paste templates for contacting crèches. Edit the [brackets] with your details.
             </p>
           </div>
@@ -1435,11 +1453,14 @@ Thank you,
       </section>
 
       {/* Find Crèches */}
-      <section id="map" className="bg-white border-b border-[#E5E7EB]">
+      <section id="map" className="bg-white border-b border-[#E2DDD7]">
         <div className="max-w-[760px] mx-auto px-5 py-10 sm:py-16">
           <div className="mb-8">
-            <h2 className="text-[24px] font-semibold text-[#111827] mb-2">Find Crèches Near You</h2>
-            <p className="text-[#6B7280]">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="w-1 h-6 rounded-full bg-[#B85A82]"></span>
+              <h2 className="text-[#0D1F2D]">Find Crèches Near You</h2>
+            </div>
+            <p className="text-[#6B6560] ml-4">
               The best approach is to check the official Tusla register first, then use Google Maps to see what's actually near you. Here's exactly how.
             </p>
           </div>
@@ -1544,11 +1565,14 @@ Thank you,
       </section>
 
       {/* Useful Links */}
-      <section id="links" className="bg-[#F9FAFB] border-b border-[#E5E7EB]">
+      <section id="links" className="bg-[#F5F2EE] border-b border-[#E2DDD7]">
         <div className="max-w-[760px] mx-auto px-5 py-10 sm:py-16">
           <div className="mb-8">
-            <h2 className="text-[24px] font-semibold text-[#111827] mb-2">Useful Links</h2>
-            <p className="text-[#6B7280]">
+            <div className="flex items-center gap-3 mb-2">
+              <span className="w-1 h-6 rounded-full bg-[#B85A82]"></span>
+              <h2 className="text-[#0D1F2D]">Useful Links</h2>
+            </div>
+            <p className="text-[#6B6560] ml-4">
               Official resources for childcare, subsidies, and support
             </p>
           </div>
@@ -1773,7 +1797,7 @@ Thank you,
               </div>
 
               <div className="mt-6 pt-6 border-t border-white/20">
-                <p className="text-sm text-[#7EACC4]">
+                <p className="text-sm text-[#8FA8C0]">
                   <strong className="text-white">Sources:</strong> Tax rates from revenue.ie • NCS from ncs.gov.ie • ECCE from gov.ie • Core Funding rates from gov.ie • Childminder registration from tusla.ie • Minimum wage (€14.15/hr) from gov.ie
                 </p>
               </div>
@@ -1786,22 +1810,26 @@ Thank you,
       </main>
 
       {/* Footer */}
-      <footer className="bg-[#F9FAFB] py-10 border-t border-[#E5E7EB]">
+      <footer className="bg-[#0D1F2D] py-10 border-t border-[#1a3248]">
         <div className="max-w-[760px] mx-auto px-5">
           <div className="space-y-6">
 
-            {/* Tagline */}
-            <p className="text-xs text-[#6B7280]">March 2026 • Built by parents, for parents • Based on Budget 2025</p>
+            {/* Logo + tagline */}
+            <div className="flex items-center gap-2.5">
+              <span className="w-2 h-2 rounded-full bg-[#B85A82]"></span>
+              <span className="text-sm font-bold text-white tracking-tight">ReturnKit</span>
+              <span className="text-[#4B6888] text-xs ml-1">Budget 2025 • Ireland</span>
+            </div>
 
             {/* Trust signals */}
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-2">
               {[
                 { icon: "M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z", label: "No personal data stored" },
                 { icon: "M18.364 18.364A9 9 0 005.636 5.636m12.728 12.728A9 9 0 015.636 5.636m12.728 12.728L5.636 5.636", label: "No cookies" },
                 { icon: "M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4", label: "Open source" },
               ].map(({ icon, label }) => (
-                <span key={label} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#374151] bg-white border border-[#E5E7EB] rounded-full">
-                  <svg className="w-3.5 h-3.5 text-[#10B981]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                <span key={label} className="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#8FA8C0] bg-white/5 border border-white/10 rounded-full">
+                  <svg className="w-3.5 h-3.5 text-[#B85A82]" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d={icon} />
                   </svg>
                   {label}
@@ -1809,25 +1837,24 @@ Thank you,
               ))}
             </div>
 
-            {/* MomOps attribution + Admin + Research */}
-            <div className="pt-5 border-t border-[#E5E7EB] flex items-center justify-between flex-wrap gap-3">
+            {/* Attribution + links */}
+            <div className="pt-5 border-t border-[#1a3248] flex items-center justify-between flex-wrap gap-3">
               <div className="flex items-center gap-4 flex-wrap">
-                <p className="text-xs text-[#9CA3AF]">
-                  Inspired by the{" "}
+                <p className="text-xs text-[#4B6888]">
+                  Inspired by{" "}
                   <a
                     href="https://momops.org"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-[#6B7280] underline underline-offset-2 hover:text-[#374151] transition-colors"
+                    className="text-[#8FA8C0] underline underline-offset-2 hover:text-white transition-colors"
                   >
                     MomOps.org
-                  </a>{" "}
-                  framework
+                  </a>
                 </p>
                 <button
                   type="button"
                   onClick={() => setShowDataPartners(true)}
-                  className="text-xs text-[#9CA3AF] hover:text-[#6B7280] transition-colors underline underline-offset-2"
+                  className="text-xs text-[#4B6888] hover:text-[#8FA8C0] transition-colors underline underline-offset-2"
                 >
                   Research partnerships
                 </button>
@@ -1835,7 +1862,7 @@ Thank you,
               <button
                 type="button"
                 onClick={() => setShowAdmin(true)}
-                className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#9CA3AF] hover:text-[#6B7280] transition-colors rounded-md hover:bg-white"
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs text-[#4B6888] hover:text-[#8FA8C0] transition-colors rounded-md hover:bg-white/5"
               >
                 <Settings className="w-3.5 h-3.5" />
                 Admin
