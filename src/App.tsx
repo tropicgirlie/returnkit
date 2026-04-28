@@ -430,7 +430,7 @@ Thank you,
       {/* Skip Links */}
       <a
         href="#main-content"
-        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-[#111827] focus:text-white focus:px-4 focus:py-2 focus:rounded-lg"
+        className="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-[100] focus:bg-[#0D1F2D] focus:text-white focus:px-4 focus:py-2 focus:rounded-lg"
       >
         Skip to main content
       </a>
@@ -472,7 +472,7 @@ Thank you,
                   key={link.href}
                   href={link.href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="block px-3 py-2.5 text-sm text-[#374151] hover:bg-[#F8FAFC] rounded-lg transition-colors"
+                  className="block px-3 py-2.5 text-sm text-[#6B6560] hover:bg-[#F8FAFC] rounded-lg transition-colors"
                 >
                   {link.label}
                 </a>
@@ -538,9 +538,9 @@ Thank you,
             <div className="sm:w-[44%] w-full">
               <div
                 id="hero-photo"
-                className="w-full h-[240px] sm:h-[380px] rounded-t-xl overflow-hidden"
+                className="w-full h-[260px] sm:h-[370px] rounded-2xl overflow-hidden ring-1 ring-white/10"
               >
-                <img src={heroImage} alt="Parents reviewing childcare costs at kitchen table" className="w-full h-full object-cover object-top" />
+                <img src={heroImage} alt="Parents reviewing childcare costs at kitchen table" className="w-full h-full object-cover object-center" />
               </div>
             </div>
 
@@ -559,9 +559,12 @@ Thank you,
 
           <div className="space-y-4">
             {/* Income Card */}
-            <div className="p-5 sm:p-6 bg-white border border-[#E2DDD7] rounded-2xl shadow-sm">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="font-semibold text-[#111827]">Your Income</h3>
+            <div className="bg-white border border-[#E2DDD7] rounded-2xl shadow-sm overflow-hidden">
+              <div className="flex items-center justify-between px-5 sm:px-6 py-4 border-b border-[#F0EBE5] bg-[#FAF8F5]">
+                <div className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#B85A82]"></span>
+                  <h3 className="text-[#0D1F2D]">Your Income</h3>
+                </div>
                 <button
                   type="button"
                   onClick={() => {
@@ -575,15 +578,16 @@ Thank you,
                     setHoursPerWeek(45);
                     setMonthlyCost(1200);
                   }}
-                  className="text-xs text-[#9CA3AF] hover:text-[#6B7280] transition-colors px-2 py-1 rounded-md hover:bg-[#F3F4F6]"
+                  className="text-xs text-[#A09890] hover:text-[#6B6560] transition-colors px-2 py-1 rounded-md hover:bg-[#F0EBE5]"
                 >
                   Reset
                 </button>
               </div>
+              <div className="p-5 sm:p-6">
               
               {/* Marital Status Pills */}
               <div className="mb-4">
-                <label className="block text-xs font-medium text-[#6B7280] uppercase tracking-wider mb-2">
+                <label className="block text-xs font-medium text-[#6B6560] uppercase tracking-wider mb-2">
                   Household
                 </label>
                 <div className="flex flex-wrap gap-2">
@@ -596,10 +600,10 @@ Thank you,
                       key={option.value}
                       type="button"
                       onClick={() => setMaritalStatus(option.value as MaritalStatus)}
-                      className={`px-4 py-2 rounded-full text-sm transition-all ${
+                      className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
                         maritalStatus === option.value
-                          ? 'bg-[#111827] text-white'
-                          : 'bg-[#F9FAFB] text-[#6B7280] hover:bg-[#E5E7EB]'
+                          ? 'bg-[#0D1F2D] text-white shadow-sm'
+                          : 'bg-[#F5F2EE] text-[#6B6560] hover:bg-[#EDE8E2]'
                       }`}
                     >
                       {option.label}
@@ -611,7 +615,7 @@ Thank you,
               {/* Salary Inputs */}
               <div className={`grid ${maritalStatus === 'married_two' ? 'grid-cols-2' : 'grid-cols-1'} gap-4`}>
                 <div>
-                  <label htmlFor="gross-salary" className="block text-xs font-medium text-[#6B7280] uppercase tracking-wider mb-2">
+                  <label htmlFor="gross-salary" className="block text-xs font-medium text-[#6B6560] uppercase tracking-wider mb-2">
                     {maritalStatus === 'married_two' ? 'Your Gross' : 'Gross Salary'}
                   </label>
                   <div className="relative">
@@ -623,7 +627,7 @@ Thank you,
                       value={formatNumberWithCommas(grossSalary)}
                       onChange={(e) => setGrossSalary(parseNumberInput(e.target.value))}
                       onFocus={(e) => e.target.select()}
-                      className="w-full h-11 pl-7 pr-3 text-sm bg-white border border-[#D1D5DB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent"
+                      className="w-full h-11 pl-7 pr-3 text-sm bg-[#FDFCFB] border border-[#D4CFC9] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#B85A82]/30 focus:border-[#B85A82]"
                       placeholder="55,000"
                     />
                   </div>
@@ -632,7 +636,7 @@ Thank you,
 
                 {maritalStatus === 'married_two' && (
                   <div>
-                    <label htmlFor="partner-salary" className="block text-xs font-medium text-[#6B7280] uppercase tracking-wider mb-2">
+                    <label htmlFor="partner-salary" className="block text-xs font-medium text-[#6B6560] uppercase tracking-wider mb-2">
                       Partner's Gross
                     </label>
                     <div className="relative">
@@ -644,7 +648,7 @@ Thank you,
                         value={formatNumberWithCommas(partnerSalary)}
                         onChange={(e) => setPartnerSalary(parseNumberInput(e.target.value))}
                         onFocus={(e) => e.target.select()}
-                        className="w-full h-11 pl-7 pr-3 text-sm bg-white border border-[#D1D5DB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent"
+                        className="w-full h-11 pl-7 pr-3 text-sm bg-[#FDFCFB] border border-[#D4CFC9] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#B85A82]/30 focus:border-[#B85A82]"
                         placeholder="45,000"
                       />
                     </div>
@@ -654,7 +658,7 @@ Thank you,
 
               {/* Pension */}
               <div className="mt-4">
-                <label htmlFor="pension" className="block text-xs font-medium text-[#6B7280] uppercase tracking-wider mb-2">
+                <label htmlFor="pension" className="block text-xs font-medium text-[#6B6560] uppercase tracking-wider mb-2">
                   Monthly Pension <span className="text-[#9CA3AF] normal-case tracking-normal">(optional)</span>
                 </label>
                 <div className="relative">
@@ -666,23 +670,28 @@ Thank you,
                     value={pension === 0 ? '' : formatNumberWithCommas(pension)}
                     onChange={(e) => setPension(parseNumberInput(e.target.value))}
                     onFocus={(e) => e.target.select()}
-                    className="w-full h-11 pl-7 pr-3 text-sm bg-white border border-[#D1D5DB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent"
+                    className="w-full h-11 pl-7 pr-3 text-sm bg-[#FDFCFB] border border-[#D4CFC9] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#B85A82]/30 focus:border-[#B85A82]"
                     placeholder="0"
                   />
                 </div>
-                <p className="mt-1 text-xs text-[#9CA3AF]">Reduces take-home; doesn't affect NCS reckonable income</p>
+                <p className="mt-1 text-xs text-[#A09890]">Reduces take-home; doesn't affect NCS reckonable income</p>
+              </div>
               </div>
               </div>
             </div>
 
             {/* Childcare Card */}
-            <div className="p-5 sm:p-6 bg-white border border-[#E2DDD7] rounded-2xl shadow-sm">
-              <h3 className="font-semibold text-[#111827] mb-4">Childcare Setup</h3>
+            <div className="bg-white border border-[#E2DDD7] rounded-2xl shadow-sm overflow-hidden">
+              <div className="flex items-center gap-2 px-5 sm:px-6 py-4 border-b border-[#F0EBE5] bg-[#FAF8F5]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#B85A82]"></span>
+                <h3 className="text-[#0D1F2D]">Childcare Setup</h3>
+              </div>
+              <div className="p-5 sm:p-6">
               
               {/* Children & Age */}
               <div className="grid grid-cols-2 gap-4 mb-4">
                 <div>
-                  <label htmlFor="num-children" className="block text-xs font-medium text-[#6B7280] uppercase tracking-wider mb-2">
+                  <label htmlFor="num-children" className="block text-xs font-medium text-[#6B6560] uppercase tracking-wider mb-2">
                     Children
                   </label>
                   <input
@@ -693,19 +702,19 @@ Thank you,
                     value={numChildren}
                     onChange={(e) => setNumChildren(Math.max(1, Number(e.target.value) || 1))}
                     onFocus={(e) => e.target.select()}
-                    className="w-full h-11 px-3 text-sm bg-white border border-[#D1D5DB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent"
+                    className="w-full h-11 px-3 text-sm bg-[#FDFCFB] border border-[#D4CFC9] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#B85A82]/30 focus:border-[#B85A82]"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="child-age" className="block text-xs font-medium text-[#6B7280] uppercase tracking-wider mb-2">
+                  <label htmlFor="child-age" className="block text-xs font-medium text-[#6B6560] uppercase tracking-wider mb-2">
                     Youngest Age
                   </label>
                   <select
                     id="child-age"
                     value={childAge}
                     onChange={(e) => setChildAge(e.target.value as ChildAge)}
-                    className="w-full h-11 px-3 text-sm bg-white border border-[#D1D5DB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent"
+                    className="w-full h-11 px-3 text-sm bg-[#FDFCFB] border border-[#D4CFC9] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#B85A82]/30 focus:border-[#B85A82]"
                   >
                     <option value="infant">Under 12 months</option>
                     <option value="toddler">12–35 months</option>
@@ -717,7 +726,7 @@ Thank you,
 
               {/* Childcare Type - Horizontal Grid */}
               <div className="mb-4">
-                <label className="block text-xs font-medium text-[#6B7280] uppercase tracking-wider mb-2">
+                <label className="block text-xs font-medium text-[#6B6560] uppercase tracking-wider mb-2">
                   Provider Type
                 </label>
                 <div className="grid grid-cols-3 gap-2">
@@ -730,10 +739,10 @@ Thank you,
                       key={option.value}
                       type="button"
                       onClick={() => setChildcareType(option.value as ChildcareType)}
-                      className={`px-3 py-3 rounded-lg border-2 text-sm transition-all ${
+                      className={`px-3 py-3 rounded-lg border text-sm transition-all ${
                         childcareType === option.value
-                          ? 'bg-[#111827] border-[#111827] text-white'
-                          : 'bg-white border-[#E5E7EB] text-[#6B7280] hover:border-[#D1D5DB]'
+                          ? 'bg-[#0D1F2D] border-[#0D1F2D] text-white shadow-sm'
+                          : 'bg-[#F5F2EE] border-[#E2DDD7] text-[#6B6560] hover:border-[#B85A82] hover:text-[#0D1F2D]'
                       }`}
                     >
                       <div className="text-center">
@@ -748,7 +757,7 @@ Thank you,
               {/* Hours & Cost */}
               <div className="grid grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="hours-week" className="block text-xs font-medium text-[#6B7280] uppercase tracking-wider mb-2">
+                  <label htmlFor="hours-week" className="block text-xs font-medium text-[#6B6560] uppercase tracking-wider mb-2">
                     Hours/Week
                   </label>
                   <input
@@ -759,7 +768,7 @@ Thank you,
                     max={80}
                     onChange={(e) => setHoursPerWeek(Number(e.target.value) || 0)}
                     onFocus={(e) => e.target.select()}
-                    className="w-full h-11 px-3 text-sm bg-white border border-[#D1D5DB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent"
+                    className="w-full h-11 px-3 text-sm bg-[#FDFCFB] border border-[#D4CFC9] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#B85A82]/30 focus:border-[#B85A82]"
                     placeholder="45"
                   />
                   {hoursPerWeek > 45 && (
@@ -768,7 +777,7 @@ Thank you,
                 </div>
 
                 <div>
-                  <label htmlFor="monthly-cost" className="block text-xs font-medium text-[#6B7280] uppercase tracking-wider mb-2">
+                  <label htmlFor="monthly-cost" className="block text-xs font-medium text-[#6B6560] uppercase tracking-wider mb-2">
                     Cost/Month
                   </label>
                   <div className="relative">
@@ -780,7 +789,7 @@ Thank you,
                       value={formatNumberWithCommas(monthlyCost)}
                       onChange={(e) => setMonthlyCost(parseNumberInput(e.target.value))}
                       onFocus={(e) => e.target.select()}
-                      className="w-full h-11 pl-7 pr-3 text-sm bg-white border border-[#D1D5DB] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#2563EB] focus:border-transparent"
+                      className="w-full h-11 pl-7 pr-3 text-sm bg-[#FDFCFB] border border-[#D4CFC9] rounded-xl focus:outline-none focus:ring-2 focus:ring-[#B85A82]/30 focus:border-[#B85A82]"
                       placeholder="1,200"
                     />
                   </div>
@@ -789,36 +798,41 @@ Thank you,
                   </p>
                 </div>
               </div>
+              </div>
             </div>
 
             {/* Results Card */}
-            <div className="bg-white border border-[#E2E8F0] rounded-2xl overflow-hidden" style={{ boxShadow: '0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.04)' }}>
+            <div className="bg-white border border-[#E2DDD7] rounded-2xl shadow-sm overflow-hidden">
+              <div className="flex items-center gap-2 px-5 sm:px-6 py-4 border-b border-[#F0EBE5] bg-[#FAF8F5]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#B85A82]"></span>
+                <h3 className="text-[#0D1F2D]">Your results</h3>
+              </div>
               <div className="p-5 sm:p-6">
                 {/* Summary Metrics — clean inline row */}
-                <div className="grid grid-cols-3 divide-x divide-[#E2E8F0] mb-5">
+                <div className="grid grid-cols-3 divide-x divide-[#E2DDD7] mb-5">
                   <div className="pr-5">
-                    <div className="text-[11px] font-medium text-[#94A3B8] uppercase tracking-wider mb-1">Net monthly</div>
-                    <div className="text-[26px] font-bold text-[#0F172A] tabular-nums leading-none">€{taxResult.netMonthly.toLocaleString()}</div>
-                    <div className="text-xs text-[#94A3B8] mt-1">after tax</div>
+                    <div className="text-[11px] font-medium text-[#A09890] uppercase tracking-wider mb-1">Net monthly</div>
+                    <div className="text-[26px] font-bold text-[#1A1714] tabular-nums leading-none">€{taxResult.netMonthly.toLocaleString()}</div>
+                    <div className="text-xs text-[#A09890] mt-1">after tax</div>
                   </div>
                   <div className="px-5">
-                    <div className="text-[11px] font-medium text-[#94A3B8] uppercase tracking-wider mb-1">
+                    <div className="text-[11px] font-medium text-[#A09890] uppercase tracking-wider mb-1">
                       {childcareType === 'nanny' ? 'Nanny cost' : childcareType === 'unregistered' ? 'Childminder' : 'Childcare cost'}
                     </div>
                     <div className="text-[26px] font-bold text-[#B05555] tabular-nums leading-none">€{outOfPocketMonthly.toLocaleString()}</div>
-                    <div className="text-xs text-[#94A3B8] mt-1">per month</div>
+                    <div className="text-xs text-[#A09890] mt-1">per month</div>
                   </div>
                   <div className="pl-5">
-                    <div className="text-[11px] font-medium text-[#94A3B8] uppercase tracking-wider mb-1">You keep</div>
+                    <div className="text-[11px] font-medium text-[#A09890] uppercase tracking-wider mb-1">You keep</div>
                     <div className="text-[26px] font-bold tabular-nums leading-none" style={{ color: retentionColor }}>€{amountLeft.toLocaleString()}</div>
-                    <div className="text-xs text-[#94A3B8] mt-1">after childcare</div>
+                    <div className="text-xs text-[#A09890] mt-1">after childcare</div>
                   </div>
                 </div>
 
                 {/* Where your net pay goes */}
-                <div className="bg-white rounded-xl border-[0.5px] border-[#E0E0E0] p-5 mb-3">
+                <div className="bg-[#FAF8F5] rounded-xl border border-[#E2DDD7] p-5 mb-3">
                   <div className="flex items-center justify-between mb-3">
-                    <div className="text-[13px] text-[#6B6B6B]">Where your net pay goes</div>
+                    <div className="text-[13px] text-[#6B6560]">Where your net pay goes</div>
                     <div 
                       className="px-3 py-1.5 text-[11px] font-semibold rounded-full"
                       style={{ 
@@ -846,12 +860,12 @@ Thank you,
                   </div>
                   
                   {childcareType === 'nanny' && (
-                    <p className="text-xs text-[#6B6B6B]">
+                    <p className="text-xs text-[#6B6560]">
                       Nannies are ineligible for NCS — no subsidy regardless of registration
                     </p>
                   )}
                   {childcareType === 'unregistered' && (
-                    <p className="text-xs text-[#6B6B6B]">
+                    <p className="text-xs text-[#6B6560]">
                       Unregistered childcare is ineligible for NCS subsidy
                     </p>
                   )}
@@ -866,9 +880,9 @@ Thank you,
                         <div className="text-sm font-semibold text-[#DC2626] mb-1">
                           No NCS subsidy available
                         </div>
-                        <div className="text-xs text-[#6B6B6B]">
-                          {childcareType === 'nanny' 
-                            ? "Nannies don't qualify for NCS regardless of registration. You're paying the full cost with no subsidy pathway." 
+                        <div className="text-xs text-[#6B6560]">
+                          {childcareType === 'nanny'
+                            ? "Nannies don't qualify for NCS regardless of registration. You're paying the full cost with no subsidy pathway."
                             : "Unregistered providers don't qualify for NCS. You're paying the full cost. Consider registered alternatives."}
                         </div>
                       </div>
@@ -877,29 +891,29 @@ Thank you,
                 )}
 
                 {/* Monthly Flow */}
-                <div className="bg-white rounded-xl border-[0.5px] border-[#E0E0E0] p-5 mb-3">
-                  <h3 className="text-[13px] text-[#6B6B6B] mb-3">Monthly flow</h3>
+                <div className="bg-[#FAF8F5] rounded-xl border border-[#E2DDD7] p-5 mb-3">
+                  <h3 className="text-[13px] text-[#6B6560] mb-3">Monthly flow</h3>
                   <div className="space-y-0">
-                    <div className="flex justify-between items-baseline py-2 border-b-[0.5px] border-[#E0E0E0]">
-                      <span className="text-sm text-[#6B6B6B]">Gross salary (€{taxResult.grossAnnual.toLocaleString()}/yr)</span>
-                      <span className="text-sm font-medium text-[#1A1A1A] tabular-nums">€{taxResult.grossMonthly.toLocaleString()}</span>
+                    <div className="flex justify-between items-baseline py-2 border-b border-[#EDE8E2]">
+                      <span className="text-sm text-[#6B6560]">Gross salary (€{taxResult.grossAnnual.toLocaleString()}/yr)</span>
+                      <span className="text-sm font-medium text-[#1A1714] tabular-nums">€{taxResult.grossMonthly.toLocaleString()}</span>
                     </div>
-                    <div className="flex justify-between items-baseline py-2 border-b-[0.5px] border-[#E0E0E0]">
-                      <span className="text-sm text-[#6B6B6B]">Tax + USC + PRSI</span>
+                    <div className="flex justify-between items-baseline py-2 border-b border-[#EDE8E2]">
+                      <span className="text-sm text-[#6B6560]">Tax + USC + PRSI</span>
                       <span className="text-sm font-medium text-[#A32D2D] tabular-nums">−€{Math.round(taxResult.totalDeductions / 12).toLocaleString()}</span>
                     </div>
-                    <div className="flex justify-between items-baseline py-2 border-b-[0.5px] border-[#E0E0E0]">
-                      <span className="text-sm text-[#6B6B6B]">Net take-home</span>
-                      <span className="text-sm font-medium text-[#1A1A1A] tabular-nums">€{taxResult.netMonthly.toLocaleString()}</span>
+                    <div className="flex justify-between items-baseline py-2 border-b border-[#EDE8E2]">
+                      <span className="text-sm text-[#6B6560]">Net take-home</span>
+                      <span className="text-sm font-medium text-[#1A1714] tabular-nums">€{taxResult.netMonthly.toLocaleString()}</span>
                     </div>
                     {pension > 0 && (
-                      <div className="flex justify-between items-baseline py-2 border-b-[0.5px] border-[#E0E0E0]">
-                        <span className="text-sm text-[#6B6B6B]">Pension contribution</span>
+                      <div className="flex justify-between items-baseline py-2 border-b border-[#EDE8E2]">
+                        <span className="text-sm text-[#6B6560]">Pension contribution</span>
                         <span className="text-sm font-medium text-[#A32D2D] tabular-nums">−€{pension.toLocaleString()}</span>
                       </div>
                     )}
-                    <div className="flex justify-between items-baseline py-2 border-b-[0.5px] border-[#E0E0E0]">
-                      <span className="text-sm text-[#6B6B6B]">
+                    <div className="flex justify-between items-baseline py-2 border-b border-[#EDE8E2]">
+                      <span className="text-sm text-[#6B6560]">
                         {childcareType === 'nanny' && 'Nanny — no NCS, no ECCE'}
                         {childcareType === 'unregistered' && 'Unregistered childcare — no NCS'}
                         {childcareType === 'registered' && subsidyAmount > 0 && `Childcare (after €${subsidyAmount} NCS${ecce.eligible ? ` + €${ecceSaving} ECCE` : ''})`}
@@ -908,18 +922,18 @@ Thank you,
                       <span className="text-sm font-medium text-[#A32D2D] tabular-nums">−€{outOfPocketMonthly.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between items-baseline py-2">
-                      <span className="text-sm font-medium text-[#1A1A1A]">Remaining</span>
+                      <span className="text-sm font-medium text-[#1A1714]">Remaining</span>
                       <span className="text-sm font-medium text-[#3B6D11] tabular-nums">€{amountLeft.toLocaleString()}</span>
                     </div>
                   </div>
                 </div>
 
                 {/* Effective Hourly Rate */}
-                <div className="bg-white rounded-xl border-[0.5px] border-[#E0E0E0] p-5 mb-3">
+                <div className="bg-[#FAF8F5] rounded-xl border border-[#E2DDD7] p-5 mb-3">
                   <div className="flex justify-between items-center">
-                    <span className="text-[13px] text-[#6B6B6B]">Your effective hourly rate</span>
+                    <span className="text-[13px] text-[#6B6560]">Your effective hourly rate</span>
                     <div className="text-right">
-                      <div className={`text-[22px] font-medium tabular-nums ${hourlyValueNum < 5 ? 'text-[#A32D2D]' : 'text-[#1A1A1A]'}`}>
+                      <div className={`text-[22px] font-medium tabular-nums ${hourlyValueNum < 5 ? 'text-[#A32D2D]' : 'text-[#1A1714]'}`}>
                         €{hourlyValue}/hr
                       </div>
                       {hourlyValueNum < 5 && hourlyValueNum > 0 && (
@@ -938,7 +952,7 @@ Thank you,
                   }`}>
                     <div className="flex items-start justify-between gap-4">
                       <div className="flex-1">
-                        <div className="text-[11px] font-medium uppercase tracking-wider text-[#6B6B6B] mb-1">
+                        <div className="text-[11px] font-medium uppercase tracking-wider text-[#6B6560] mb-1">
                           Marginal Effective Tax Rate
                         </div>
                         <div className={`text-[28px] font-semibold tabular-nums leading-none mb-2 ${
@@ -946,7 +960,7 @@ Thank you,
                         }`}>
                           {metr}%
                         </div>
-                        <p className="text-xs text-[#6B6B6B] leading-relaxed">
+                        <p className="text-xs text-[#6B6560] leading-relaxed">
                           {metr >= 60
                             ? `For every extra €1,000 earned, you keep only ~€${1000 - metr * 10} after income tax and NCS subsidy withdrawal. ESRI identifies this as a significant work disincentive.`
                             : metr >= 45
@@ -972,25 +986,25 @@ Thank you,
                       <h3 className="text-[13px] text-[#A32D2D] mb-3">The waitlist penalty</h3>
                       <div className="space-y-0">
                         <div className="flex justify-between items-baseline py-2 border-b-[0.5px] border-[#F09595]">
-                          <span className="text-sm text-[#6B6B6B]">Dublin crèche average</span>
-                          <span className="text-sm font-medium text-[#1A1A1A] tabular-nums">~€{dublinCrecheAvg.toLocaleString()}/mo</span>
+                          <span className="text-sm text-[#6B6560]">Dublin crèche average</span>
+                          <span className="text-sm font-medium text-[#1A1714] tabular-nums">~€{dublinCrecheAvg.toLocaleString()}/mo</span>
                         </div>
                         <div className="flex justify-between items-baseline py-2 border-b-[0.5px] border-[#F09595]">
-                          <span className="text-sm text-[#6B6B6B]">NCS subsidy (€{subsidy.hourlyRate}/hr × 45h)</span>
+                          <span className="text-sm text-[#6B6560]">NCS subsidy (€{subsidy.hourlyRate}/hr × 45h)</span>
                           <span className="text-sm font-medium text-[#3B6D11] tabular-nums">−€{ncsSubsidy.toLocaleString()}/mo</span>
                         </div>
                         {ecce.eligible && (
                           <div className="flex justify-between items-baseline py-2 border-b-[0.5px] border-[#F09595]">
-                            <span className="text-sm text-[#6B6B6B]">ECCE free preschool saving</span>
+                            <span className="text-sm text-[#6B6560]">ECCE free preschool saving</span>
                             <span className="text-sm font-medium text-[#3B6D11] tabular-nums">−€{ecceSavingAmount.toLocaleString()}/mo</span>
                           </div>
                         )}
                         <div className="flex justify-between items-baseline py-2 border-b-[0.5px] border-[#F09595]">
-                          <span className="text-sm text-[#6B6B6B]">Crèche out-of-pocket after NCS{ecce.eligible ? ' + ECCE' : ''}</span>
+                          <span className="text-sm text-[#6B6560]">Crèche out-of-pocket after NCS{ecce.eligible ? ' + ECCE' : ''}</span>
                           <span className="text-sm font-medium text-[#3B6D11] tabular-nums">~€{Math.round(effectiveCrecheOut).toLocaleString()}/mo</span>
                         </div>
                         <div className="flex justify-between items-baseline py-2 border-b-[0.5px] border-[#F09595]">
-                          <span className="text-sm text-[#6B6B6B]">What you actually pay (nanny)</span>
+                          <span className="text-sm text-[#6B6560]">What you actually pay (nanny)</span>
                           <span className="text-sm font-medium text-[#A32D2D] tabular-nums">€{outOfPocketMonthly.toLocaleString()}/mo</span>
                         </div>
                         <div className="bg-[#F9D5D5] rounded-lg p-3 mt-2">
@@ -1012,7 +1026,7 @@ Thank you,
                   <button
                     type="button"
                     onClick={shareResult}
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-[#111827] text-white rounded-lg hover:bg-[#374151] transition-colors text-sm"
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-[#0D1F2D] text-white rounded-lg hover:bg-[#1a3a4d] transition-colors text-sm"
                   >
                     <Share2 className="w-4 h-4" />
                     Share Result
@@ -1020,7 +1034,7 @@ Thank you,
                   <button
                     type="button"
                     onClick={() => setShowScenarioComparison(!showScenarioComparison)}
-                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-white text-[#374151] border border-[#E5E7EB] rounded-lg hover:bg-[#F9FAFB] transition-colors text-sm"
+                    className="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-[#F5F2EE] text-[#6B6560] border border-[#E2DDD7] rounded-lg hover:bg-[#EDE8E2] transition-colors text-sm"
                   >
                     <Briefcase className="w-4 h-4" />
                     Compare Scenarios
@@ -1038,10 +1052,10 @@ Thank you,
                 </button>
 
                 {showBreakdown && (
-                  <div className="p-4 bg-white rounded-lg border border-[#E5E7EB] text-sm space-y-2.5 mb-4">
+                  <div className="p-4 bg-[#FAF8F5] rounded-lg border border-[#E2DDD7] text-sm space-y-2.5 mb-4">
                     <div className="flex justify-between items-baseline">
                       <span className="text-[#6B6560]">Gross salary</span>
-                      <span className="font-semibold text-[#111827] tabular-nums">€{taxResult.grossMonthly.toLocaleString()}</span>
+                      <span className="font-semibold text-[#1A1714] tabular-nums">€{taxResult.grossMonthly.toLocaleString()}</span>
                     </div>
                     <div className="flex justify-between text-xs items-baseline">
                       <span className="text-[#9CA3AF]">- Income Tax</span>
@@ -1055,9 +1069,9 @@ Thank you,
                       <span className="text-[#9CA3AF]">- PRSI</span>
                       <span className="text-[#9CA3AF] tabular-nums">€{Math.round(taxResult.prsi / 12).toLocaleString()}</span>
                     </div>
-                    <div className="pt-2 border-t border-[#E5E7EB] flex justify-between items-baseline">
+                    <div className="pt-2 border-t border-[#E2DDD7] flex justify-between items-baseline">
                       <span className="text-[#6B6560]">Net salary</span>
-                      <span className="font-semibold text-[#111827] tabular-nums">€{taxResult.netMonthly.toLocaleString()}</span>
+                      <span className="font-semibold text-[#1A1714] tabular-nums">€{taxResult.netMonthly.toLocaleString()}</span>
                     </div>
                     {childcareType === 'registered' && subsidyAmount > 0 && (
                       <>
@@ -1081,9 +1095,9 @@ Thank you,
                       <span className="text-[#DC2626]">- Childcare (net)</span>
                       <span className="font-semibold text-[#DC2626] tabular-nums">€{outOfPocketMonthly.toLocaleString()}</span>
                     </div>
-                    <div className="pt-2.5 border-t-2 border-[#111827] flex justify-between items-baseline">
-                      <span className="font-semibold text-[#111827]">What you keep</span>
-                      <span className="font-black text-[#111827] tabular-nums">€{amountLeft.toLocaleString()}</span>
+                    <div className="pt-2.5 border-t-2 border-[#0D1F2D] flex justify-between items-baseline">
+                      <span className="font-semibold text-[#0D1F2D]">What you keep</span>
+                      <span className="font-black text-[#0D1F2D] tabular-nums">€{amountLeft.toLocaleString()}</span>
                     </div>
                   </div>
                 )}
@@ -1098,10 +1112,10 @@ Thank you,
                         </svg>
                       </div>
                       <div>
-                        <div className="text-sm font-semibold text-[#111827] mb-0.5">
+                        <div className="text-sm font-semibold text-[#0D1F2D] mb-0.5">
                           NCS Subsidy: €{subsidyAmount.toLocaleString()}/mo
                         </div>
-                        <div className="text-xs text-[#6B7280]">
+                        <div className="text-xs text-[#6B6560]">
                           €{subsidy.hourlyRate}/hr × {Math.min(hoursPerWeek, 45)}hrs/wk
                         </div>
                       </div>
@@ -1117,10 +1131,10 @@ Thank you,
                         <CheckCircle2 className="w-4 h-4 text-white" />
                       </div>
                       <div>
-                        <div className="text-sm font-semibold text-[#111827] mb-0.5">
+                        <div className="text-sm font-semibold text-[#0D1F2D] mb-0.5">
                           ECCE Free Preschool: ~€{ecceSaving.toLocaleString()}/mo
                         </div>
-                        <div className="text-xs text-[#6B7280]">
+                        <div className="text-xs text-[#6B6560]">
                           15 free hours/week for children aged 2y8m–5y6m (term-time)
                         </div>
                       </div>
@@ -1129,14 +1143,14 @@ Thank you,
                 )}
 
                 {/* Report/Feedback Section */}
-                <div className="mt-6 pt-4 border-t border-[#E5E7EB]">
-                  <div className="flex items-start gap-3 p-4 bg-[#F9FAFB] rounded-lg border border-[#E5E7EB]">
-                    <Info className="w-5 h-5 text-[#6B7280] flex-shrink-0 mt-0.5" />
+                <div className="mt-6 pt-4 border-t border-[#E2DDD7]">
+                  <div className="flex items-start gap-3 p-4 bg-[#FAF8F5] rounded-lg border border-[#E2DDD7]">
+                    <Info className="w-5 h-5 text-[#6B6560] flex-shrink-0 mt-0.5" />
                     <div className="flex-1">
-                      <div className="text-sm font-medium text-[#111827] mb-1">
+                      <div className="text-sm font-medium text-[#0D1F2D] mb-1">
                         See an error in these calculations?
                       </div>
-                      <div className="text-xs text-[#6B7280] mb-2">
+                      <div className="text-xs text-[#6B6560] mb-2">
                         ReturnKit uses 2025 Irish tax rates, NCS subsidy bands, and ECCE eligibility rules. If you spot an inaccuracy or have a correction, please let us know.
                       </div>
                       <a
@@ -1156,8 +1170,8 @@ Thank you,
             {/* Scenario Comparison */}
             {showScenarioComparison && (
               <div className="p-5 sm:p-6 bg-white border border-[#E2DDD7] rounded-2xl shadow-sm">
-                <h3 className="font-semibold text-[#111827] mb-1">Full-time vs Part-time vs Not Returning</h3>
-                <p className="text-xs text-[#6B7280] mb-5">Based on your current inputs. Part-time assumes 3 days/week (60%).</p>
+                <h3 className="font-semibold text-[#0D1F2D] mb-1">Full-time vs Part-time vs Not Returning</h3>
+                <p className="text-xs text-[#6B6560] mb-5">Based on your current inputs. Part-time assumes 3 days/week (60%).</p>
                 
                 <div className="space-y-3">
                   {(['fulltime', 'parttime', 'notworking'] as WorkScenario[]).map((key) => {
@@ -1168,21 +1182,21 @@ Thank you,
                       <div
                         key={key}
                         className={`p-4 rounded-lg border-2 transition-colors ${
-                          isBest ? 'border-[#2563EB] bg-[#EFF6FF]' : 'border-[#E5E7EB] bg-[#F9FAFB]'
+                          isBest ? 'border-[#2563EB] bg-[#EFF6FF]' : 'border-[#E2DDD7] bg-[#FAF8F5]'
                         }`}
                       >
                         <div className="flex items-center justify-between mb-2">
                           <div className="flex items-center gap-2">
-                            <span className="font-semibold text-sm text-[#111827]">{s.label}</span>
+                            <span className="font-semibold text-sm text-[#0D1F2D]">{s.label}</span>
                             {isBest && (
                               <span className="text-xs font-semibold text-[#2563EB] bg-[#DBEAFE] px-2 py-0.5 rounded-full">Best</span>
                             )}
                           </div>
-                          <span className={`font-semibold text-sm tabular-nums ${isNegative ? 'text-[#DC2626]' : 'text-[#111827]'}`}>
+                          <span className={`font-semibold text-sm tabular-nums ${isNegative ? 'text-[#DC2626]' : 'text-[#0D1F2D]'}`}>
                             €{s.amountLeft.toLocaleString()}/mo
                           </span>
                         </div>
-                        <p className="text-xs text-[#6B7280] mb-2">{s.description}</p>
+                        <p className="text-xs text-[#6B6560] mb-2">{s.description}</p>
                         {key !== 'notworking' && (
                           <div className="flex gap-4 text-xs text-[#9CA3AF]">
                             <span>Net: €{s.netMonthly.toLocaleString()}</span>
@@ -1264,13 +1278,13 @@ Thank you,
                 wait: 'Weeks',
               },
             ].map((alt) => (
-              <div key={alt.title} className="p-4 bg-white border border-[#E5E7EB] rounded-xl">
-                <h4 className="font-semibold text-[#111827] text-sm mb-1">{alt.title}</h4>
-                <p className="text-xs text-[#6B7280] mb-3 leading-relaxed">{alt.description}</p>
+              <div key={alt.title} className="p-4 bg-white border border-[#E2DDD7] rounded-xl">
+                <h4 className="font-semibold text-[#0D1F2D] text-sm mb-1">{alt.title}</h4>
+                <p className="text-xs text-[#6B6560] mb-3 leading-relaxed">{alt.description}</p>
                 <div className="flex items-center gap-3 text-xs">
-                  <span className="text-[#111827] font-semibold">{alt.cost}</span>
+                  <span className="text-[#0D1F2D] font-semibold">{alt.cost}</span>
                   <span className="text-[#9CA3AF]">·</span>
-                  <span className="flex items-center gap-1 text-[#6B7280]">
+                  <span className="flex items-center gap-1 text-[#6B6560]">
                     <Clock className="w-3 h-3" />
                     {alt.wait}
                   </span>
@@ -1285,7 +1299,7 @@ Thank you,
               <AlertCircle className="w-5 h-5 text-[#2563EB] flex-shrink-0 mt-0.5" />
               <div>
                 <h4 className="text-sm font-semibold text-[#1E3A8A] mb-1">The elephant in the room</h4>
-                <p className="text-xs text-[#374151] leading-relaxed">
+                <p className="text-xs text-[#6B6560] leading-relaxed">
                   At €14.15/hr minimum wage, a full-time nanny costs over €2,400/mo before employer PRSI. A childminder charging legal rates is often out of reach. The result: many families are quietly pushed towards informal, cash-in-hand arrangements. This is not a parenting failure. It is a policy failure. When compliance is unaffordable, the system itself creates the shadow economy it claims to regulate.
                 </p>
               </div>
@@ -1314,8 +1328,8 @@ Thank you,
             {/* Today */}
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-[#111827] text-white flex items-center justify-center font-semibold text-sm">1</div>
-                <h3 className="font-semibold text-[#111827]">Today</h3>
+                <div className="w-8 h-8 rounded-lg bg-[#0D1F2D] text-white flex items-center justify-center font-semibold text-sm">1</div>
+                <h3 className="font-semibold text-[#0D1F2D]">Today</h3>
               </div>
               <div className="space-y-3">
                 {[
@@ -1325,16 +1339,16 @@ Thank you,
                 ].map((item) => (
                   <label
                     key={item.id}
-                    className="flex items-start gap-3 p-4 rounded-lg border border-[#E5E7EB] bg-white hover:bg-[#F9FAFB] cursor-pointer transition-all"
+                    className="flex items-start gap-3 p-4 rounded-lg border border-[#E2DDD7] bg-white hover:bg-[#FAF8F5] cursor-pointer transition-all"
                   >
                     <input
                       type="checkbox"
                       checked={checkedItems[item.id] || false}
                       onChange={() => toggleCheckItem(item.id)}
-                      className="mt-0.5 w-5 h-5 rounded border-2 border-[#E5E7EB] text-[#111827] focus:ring-2 focus:ring-[#2563EB]/50"
+                      className="mt-0.5 w-5 h-5 rounded border-2 border-[#E2DDD7] text-[#0D1F2D] focus:ring-2 focus:ring-[#2563EB]/50"
                     />
                     <div className="flex-1">
-                      <span className="text-sm text-[#111827]">{item.text}</span>
+                      <span className="text-sm text-[#0D1F2D]">{item.text}</span>
                       {item.link && (
                         <a
                           href={item.link}
@@ -1355,8 +1369,8 @@ Thank you,
             {/* This Week */}
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-[#111827] text-white flex items-center justify-center font-semibold text-sm">2</div>
-                <h3 className="font-semibold text-[#111827]">This Week</h3>
+                <div className="w-8 h-8 rounded-lg bg-[#0D1F2D] text-white flex items-center justify-center font-semibold text-sm">2</div>
+                <h3 className="font-semibold text-[#0D1F2D]">This Week</h3>
               </div>
               <div className="space-y-3">
                 {[
@@ -1366,15 +1380,15 @@ Thank you,
                 ].map((item) => (
                   <label
                     key={item.id}
-                    className="flex items-start gap-3 p-4 rounded-lg border border-[#E5E7EB] bg-white hover:bg-[#F9FAFB] cursor-pointer transition-all"
+                    className="flex items-start gap-3 p-4 rounded-lg border border-[#E2DDD7] bg-white hover:bg-[#FAF8F5] cursor-pointer transition-all"
                   >
                     <input
                       type="checkbox"
                       checked={checkedItems[item.id] || false}
                       onChange={() => toggleCheckItem(item.id)}
-                      className="mt-0.5 w-5 h-5 rounded border-2 border-[#E5E7EB] text-[#111827] focus:ring-2 focus:ring-[#2563EB]/50"
+                      className="mt-0.5 w-5 h-5 rounded border-2 border-[#E2DDD7] text-[#0D1F2D] focus:ring-2 focus:ring-[#2563EB]/50"
                     />
-                    <span className="text-sm text-[#111827]">{item.text}</span>
+                    <span className="text-sm text-[#0D1F2D]">{item.text}</span>
                   </label>
                 ))}
               </div>
@@ -1383,8 +1397,8 @@ Thank you,
             {/* This Month */}
             <div>
               <div className="flex items-center gap-3 mb-4">
-                <div className="w-8 h-8 rounded-lg bg-[#111827] text-white flex items-center justify-center font-semibold text-sm">3</div>
-                <h3 className="font-semibold text-[#111827]">This Month</h3>
+                <div className="w-8 h-8 rounded-lg bg-[#0D1F2D] text-white flex items-center justify-center font-semibold text-sm">3</div>
+                <h3 className="font-semibold text-[#0D1F2D]">This Month</h3>
               </div>
               <div className="space-y-3">
                 {[
@@ -1394,15 +1408,15 @@ Thank you,
                 ].map((item) => (
                   <label
                     key={item.id}
-                    className="flex items-start gap-3 p-4 rounded-lg border border-[#E5E7EB] bg-white hover:bg-[#F9FAFB] cursor-pointer transition-all"
+                    className="flex items-start gap-3 p-4 rounded-lg border border-[#E2DDD7] bg-white hover:bg-[#FAF8F5] cursor-pointer transition-all"
                   >
                     <input
                       type="checkbox"
                       checked={checkedItems[item.id] || false}
                       onChange={() => toggleCheckItem(item.id)}
-                      className="mt-0.5 w-5 h-5 rounded border-2 border-[#E5E7EB] text-[#111827] focus:ring-2 focus:ring-[#2563EB]/50"
+                      className="mt-0.5 w-5 h-5 rounded border-2 border-[#E2DDD7] text-[#0D1F2D] focus:ring-2 focus:ring-[#2563EB]/50"
                     />
-                    <span className="text-sm text-[#111827]">{item.text}</span>
+                    <span className="text-sm text-[#0D1F2D]">{item.text}</span>
                   </label>
                 ))}
               </div>
@@ -1430,21 +1444,21 @@ Thank you,
               { title: 'NCS Subsidy Inquiry', email: subsidyEmail },
               { title: 'Follow-Up Request', email: followUpEmail }
             ].map((script, idx) => (
-              <div key={idx} className="rounded-xl border border-[#E5E7EB] bg-white overflow-hidden">
-                <div className="px-5 py-3.5 border-b border-[#E5E7EB] bg-[#F9FAFB] flex items-center justify-between">
+              <div key={idx} className="rounded-xl border border-[#E2DDD7] bg-white overflow-hidden">
+                <div className="px-5 py-3.5 border-b border-[#E2DDD7] bg-[#FAF8F5] flex items-center justify-between">
                   <div className="flex items-center gap-2.5">
-                    <Mail className="w-4 h-4 text-[#6B7280]" />
-                    <h3 className="font-semibold text-[#111827] text-sm">{script.title}</h3>
+                    <Mail className="w-4 h-4 text-[#6B6560]" />
+                    <h3 className="font-semibold text-[#0D1F2D] text-sm">{script.title}</h3>
                   </div>
                   <CopyButton 
                     text={script.email} 
                     label="Copy"
-                    className="text-xs font-semibold px-3 py-1.5 bg-[#111827] text-white rounded-lg hover:bg-[#374151] transition-colors flex items-center gap-1.5"
+                    className="text-xs font-semibold px-3 py-1.5 bg-[#0D1F2D] text-white rounded-lg hover:bg-[#1a3a4d] transition-colors flex items-center gap-1.5"
                     onCopy={() => showToast('Email copied to clipboard')}
                   />
                 </div>
                 <div className="p-5">
-                  <pre className="whitespace-pre-wrap text-sm text-[#374151] leading-relaxed">{script.email}</pre>
+                  <pre className="whitespace-pre-wrap text-sm text-[#6B6560] leading-relaxed">{script.email}</pre>
                 </div>
               </div>
             ))}
@@ -1467,11 +1481,11 @@ Thank you,
 
           <div className="space-y-4">
             {/* Step 1 */}
-            <div className="bg-[#F9FAFB] rounded-xl border border-[#E5E7EB] p-5 flex gap-4">
+            <div className="bg-[#FAF8F5] rounded-xl border border-[#E2DDD7] p-5 flex gap-4">
               <div className="w-8 h-8 rounded-full bg-[#0D1F2D] text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">1</div>
               <div>
-                <p className="font-semibold text-[#111827] mb-1">Open the Tusla Early Years register</p>
-                <p className="text-sm text-[#6B7280] mb-3">
+                <p className="font-semibold text-[#0D1F2D] mb-1">Open the Tusla Early Years register</p>
+                <p className="text-sm text-[#6B6560] mb-3">
                   This is the official list of every Tusla-registered crèche, childminder, and preschool in Ireland. Only registered providers qualify for NCS subsidies and ECCE.
                 </p>
                 <a
@@ -1486,22 +1500,22 @@ Thank you,
             </div>
 
             {/* Step 2 */}
-            <div className="bg-[#F9FAFB] rounded-xl border border-[#E5E7EB] p-5 flex gap-4">
+            <div className="bg-[#FAF8F5] rounded-xl border border-[#E2DDD7] p-5 flex gap-4">
               <div className="w-8 h-8 rounded-full bg-[#0D1F2D] text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">2</div>
               <div>
-                <p className="font-semibold text-[#111827] mb-1">Search by your county or area</p>
-                <p className="text-sm text-[#6B7280]">
+                <p className="font-semibold text-[#0D1F2D] mb-1">Search by your county or area</p>
+                <p className="text-sm text-[#6B6560]">
                   Filter by county, then by type — <strong>Full Day Care</strong> for full-time crèche, <strong>Childminder</strong> for home-based care, or <strong>Part-time Day Care</strong> for sessional places. Download the results as a list.
                 </p>
               </div>
             </div>
 
             {/* Step 3 */}
-            <div className="bg-[#F9FAFB] rounded-xl border border-[#E5E7EB] p-5 flex gap-4">
+            <div className="bg-[#FAF8F5] rounded-xl border border-[#E2DDD7] p-5 flex gap-4">
               <div className="w-8 h-8 rounded-full bg-[#0D1F2D] text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">3</div>
               <div>
-                <p className="font-semibold text-[#111827] mb-1">Find them on Google Maps</p>
-                <p className="text-sm text-[#6B7280] mb-3">
+                <p className="font-semibold text-[#0D1F2D] mb-1">Find them on Google Maps</p>
+                <p className="text-sm text-[#6B6560] mb-3">
                   Open Google Maps and search <strong>"crèche near me"</strong> or <strong>"childcare [your area]"</strong>. Cross-reference the names against your Tusla list to confirm they're registered. Google Maps also shows reviews, photos, and opening hours.
                 </p>
                 <a
@@ -1516,12 +1530,12 @@ Thank you,
             </div>
 
             {/* Step 4 */}
-            <div className="bg-[#F9FAFB] rounded-xl border border-[#E5E7EB] p-5 flex gap-4">
+            <div className="bg-[#FAF8F5] rounded-xl border border-[#E2DDD7] p-5 flex gap-4">
               <div className="w-8 h-8 rounded-full bg-[#0D1F2D] text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">4</div>
               <div>
-                <p className="font-semibold text-[#111827] mb-1">Contact 3–5 crèches and ask the right questions</p>
-                <p className="text-sm text-[#6B7280] mb-2">When you call or email, ask:</p>
-                <ul className="text-sm text-[#6B7280] space-y-1">
+                <p className="font-semibold text-[#0D1F2D] mb-1">Contact 3–5 crèches and ask the right questions</p>
+                <p className="text-sm text-[#6B6560] mb-2">When you call or email, ask:</p>
+                <ul className="text-sm text-[#6B6560] space-y-1">
                   <li>• Do you have availability for [age] from [month]?</li>
                   <li>• What is the current waiting list time?</li>
                   <li>• Are you registered with Tusla? (confirms NCS eligibility)</li>
@@ -1532,11 +1546,11 @@ Thank you,
             </div>
 
             {/* Step 5 */}
-            <div className="bg-[#F9FAFB] rounded-xl border border-[#E5E7EB] p-5 flex gap-4">
+            <div className="bg-[#FAF8F5] rounded-xl border border-[#E2DDD7] p-5 flex gap-4">
               <div className="w-8 h-8 rounded-full bg-[#0D1F2D] text-white flex items-center justify-center text-sm font-bold flex-shrink-0 mt-0.5">5</div>
               <div>
-                <p className="font-semibold text-[#111827] mb-1">Apply for NCS as soon as you have a place</p>
-                <p className="text-sm text-[#6B7280] mb-3">
+                <p className="font-semibold text-[#0D1F2D] mb-1">Apply for NCS as soon as you have a place</p>
+                <p className="text-sm text-[#6B6560] mb-3">
                   NCS applications can take a few weeks to process. Apply at ncs.gov.ie once you have a confirmed start date and your crèche's Tusla registration number.
                 </p>
                 <a
@@ -1579,8 +1593,8 @@ Thank you,
 
           <div className="space-y-6">
             {/* Government & Subsidies */}
-            <div className="bg-white rounded-xl border border-[#E5E7EB] p-5">
-              <h3 className="font-semibold text-[#111827] mb-4 flex items-center gap-2 text-sm">
+            <div className="bg-white rounded-xl border border-[#E2DDD7] p-5">
+              <h3 className="font-semibold text-[#0D1F2D] mb-4 flex items-center gap-2 text-sm">
                 <div className="w-7 h-7 bg-[#DBEAFE] rounded-lg flex items-center justify-center">
                   <CheckCircle2 className="w-3.5 h-3.5 text-[#2563EB]" />
                 </div>
@@ -1593,17 +1607,17 @@ Thank you,
                   { href: 'https://www.revenue.ie/en/personal-tax-credits-reliefs-and-exemptions/tax-relief-charts/index.aspx', title: 'Revenue Tax Calculator', desc: 'Calculate income tax, USC, and PRSI' },
                   { href: 'https://www.citizensinformation.ie/en/education/early-childhood-education-and-care/', title: 'Citizens Information', desc: 'Comprehensive guide to childcare supports' },
                 ].map((link) => (
-                  <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="block p-3 rounded-lg hover:bg-[#F9FAFB] transition-colors group">
-                    <div className="text-sm text-[#111827] group-hover:text-[#2563EB] mb-0.5">{link.title} →</div>
-                    <div className="text-xs text-[#6B7280]">{link.desc}</div>
+                  <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="block p-3 rounded-lg hover:bg-[#FAF8F5] transition-colors group">
+                    <div className="text-sm text-[#0D1F2D] group-hover:text-[#2563EB] mb-0.5">{link.title} →</div>
+                    <div className="text-xs text-[#6B6560]">{link.desc}</div>
                   </a>
                 ))}
               </div>
             </div>
 
             {/* Childcare Services */}
-            <div className="bg-white rounded-xl border border-[#E5E7EB] p-5">
-              <h3 className="font-semibold text-[#111827] mb-4 flex items-center gap-2 text-sm">
+            <div className="bg-white rounded-xl border border-[#E2DDD7] p-5">
+              <h3 className="font-semibold text-[#0D1F2D] mb-4 flex items-center gap-2 text-sm">
                 <div className="w-7 h-7 bg-[#DBEAFE] rounded-lg flex items-center justify-center">
                   <Mail className="w-3.5 h-3.5 text-[#2563EB]" />
                 </div>
@@ -1616,9 +1630,9 @@ Thank you,
                   { href: 'https://www.barnardos.ie/what-we-do/working-with-children-and-families/early-years-services', title: 'Barnardos Early Years', desc: 'Community childcare services and support' },
                   { href: 'https://myccc.ie/', title: 'City & County Childcare', desc: 'Local childcare information and resources' },
                 ].map((link) => (
-                  <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="block p-3 rounded-lg hover:bg-[#F9FAFB] transition-colors group">
-                    <div className="text-sm text-[#111827] group-hover:text-[#2563EB] mb-0.5">{link.title} →</div>
-                    <div className="text-xs text-[#6B7280]">{link.desc}</div>
+                  <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="block p-3 rounded-lg hover:bg-[#FAF8F5] transition-colors group">
+                    <div className="text-sm text-[#0D1F2D] group-hover:text-[#2563EB] mb-0.5">{link.title} →</div>
+                    <div className="text-xs text-[#6B6560]">{link.desc}</div>
                   </a>
                 ))}
               </div>
@@ -1626,8 +1640,8 @@ Thank you,
 
             {/* Support & Advocacy + Employment Rights in a grid on wider screens */}
             <div className="grid sm:grid-cols-2 gap-4">
-              <div className="bg-white rounded-xl border border-[#E5E7EB] p-5">
-                <h3 className="font-semibold text-[#111827] mb-4 flex items-center gap-2 text-sm">
+              <div className="bg-white rounded-xl border border-[#E2DDD7] p-5">
+                <h3 className="font-semibold text-[#0D1F2D] mb-4 flex items-center gap-2 text-sm">
                   <div className="w-7 h-7 bg-[#DBEAFE] rounded-lg flex items-center justify-center">
                     <Mail className="w-3.5 h-3.5 text-[#2563EB]" />
                   </div>
@@ -1640,16 +1654,16 @@ Thank you,
                     { href: 'https://www.onefamily.ie/', title: 'One Family', desc: 'One-parent family support' },
                     { href: 'https://www.childcarepolicy.net/', title: 'Start Strong', desc: 'Childcare policy advocacy' },
                   ].map((link) => (
-                    <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="block p-3 rounded-lg hover:bg-[#F9FAFB] transition-colors group">
-                      <div className="text-sm text-[#111827] group-hover:text-[#2563EB] mb-0.5">{link.title} →</div>
-                      <div className="text-xs text-[#6B7280]">{link.desc}</div>
+                    <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="block p-3 rounded-lg hover:bg-[#FAF8F5] transition-colors group">
+                      <div className="text-sm text-[#0D1F2D] group-hover:text-[#2563EB] mb-0.5">{link.title} →</div>
+                      <div className="text-xs text-[#6B6560]">{link.desc}</div>
                     </a>
                   ))}
                 </div>
               </div>
 
-              <div className="bg-white rounded-xl border border-[#E5E7EB] p-5">
-                <h3 className="font-semibold text-[#111827] mb-4 flex items-center gap-2 text-sm">
+              <div className="bg-white rounded-xl border border-[#E2DDD7] p-5">
+                <h3 className="font-semibold text-[#0D1F2D] mb-4 flex items-center gap-2 text-sm">
                   <div className="w-7 h-7 bg-[#D1FAE5] rounded-lg flex items-center justify-center">
                     <AlertCircle className="w-3.5 h-3.5 text-[#059669]" />
                   </div>
@@ -1662,9 +1676,9 @@ Thank you,
                     { href: 'https://www.irishstatutebook.ie/eli/2023/act/16/enacted/en/html', title: 'Work Life Balance Act', desc: 'Right to request flexible work' },
                     { href: 'https://www.ictu.ie/workingfamily', title: 'ICTU Working Family', desc: 'Trade union parent support' },
                   ].map((link) => (
-                    <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="block p-3 rounded-lg hover:bg-[#F9FAFB] transition-colors group">
-                      <div className="text-sm text-[#111827] group-hover:text-[#2563EB] mb-0.5">{link.title} →</div>
-                      <div className="text-xs text-[#6B7280]">{link.desc}</div>
+                    <a key={link.href} href={link.href} target="_blank" rel="noopener noreferrer" className="block p-3 rounded-lg hover:bg-[#FAF8F5] transition-colors group">
+                      <div className="text-sm text-[#0D1F2D] group-hover:text-[#2563EB] mb-0.5">{link.title} →</div>
+                      <div className="text-xs text-[#6B6560]">{link.desc}</div>
                     </a>
                   ))}
                 </div>
@@ -1897,7 +1911,7 @@ Thank you,
 
       {/* Toast */}
       {toastMessage && (
-        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#111827] text-white px-6 py-3 rounded-lg shadow-lg z-50 text-sm flex items-center gap-2">
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 bg-[#0D1F2D] text-white px-6 py-3 rounded-lg shadow-lg z-50 text-sm flex items-center gap-2">
           <CheckCircle2 className="w-4 h-4 text-[#10B981]" />
           {toastMessage}
         </div>
