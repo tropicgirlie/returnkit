@@ -485,7 +485,7 @@ Thank you,
       <main id="main-content">
       {/* Hero Section */}
       <section className="bg-[#0D1F2D] border-b border-[#1a3248]">
-        <div className="max-w-[760px] mx-auto px-5 pt-14 sm:pt-20 pb-0">
+        <div className="max-w-[760px] mx-auto px-5 pt-14 sm:pt-20 pb-8 sm:pb-0">
           <div className="flex flex-col sm:flex-row gap-10 sm:gap-14 items-end">
 
             {/* Left — text */}
@@ -534,8 +534,8 @@ Thank you,
               </div>
             </div>
 
-            {/* Right — photo, flush to bottom */}
-            <div className="sm:w-[44%] w-full">
+            {/* Right — photo, vertically centred in hero */}
+            <div className="sm:w-[44%] w-full self-center">
               <div
                 id="hero-photo"
                 className="w-full h-[260px] sm:h-[370px] rounded-2xl overflow-hidden ring-1 ring-white/10"
